@@ -61,7 +61,7 @@ src
 1. 执行 `npm install` 安装依赖包。
 2. angular-cli.json文件中的project -> ejected字段的值修改为 false。
 3. 执行 `package.json` 中 `scripts` 配置里以 `start` 开头的脚本，例如执行 `npm run start` 将启动一个监听
-`80` 端口的服务（若启动不成功，检查下80端口是否被其它服务占用了）。
+`8080` 端口的服务（若启动不成功，检查下8080端口是否被其它服务占用了）。
 
 
 ### 编译上线（非打包）
