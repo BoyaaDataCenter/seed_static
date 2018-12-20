@@ -1,0 +1,248 @@
+<div id="business-config">
+  <!--页面头部-->
+  <app-global-header></app-global-header>
+  <!--页面列表-->
+  <div class="business-list-main" *ngIf="isShowData">
+    <div>
+      <div class="title">我的业务</div>
+      <div class="business-list">
+        <div class="item addItem" (click)="addBusiness()" *ngIf="userInfo.role=='super_admin'">
+          <div>+ 新增业务</div>
+        </div>
+        <div class="item" *ngFor="let item of businessList.my_bussiness;let i = index;" (click)="jumpPage(item)">
+          <div class="operate">
+            <span class="fa fa-edit" title="编辑" (click)="editBusiness(item)" *ngIf="item.edit"></span>
+            <span class="fa fa-trash" title="删除" (click)="clearBusiness(item,i)" *ngIf="item.delete"></span>
+          </div>
+          <div class="main">
+            <div class="icon"></div>
+            <div class="info">
+              <div class="name">{{item.name || '暂未命名'}}</div>
+              <div class="desc">{{item.description || '暂无描述'}}</div>
+            </div>
+          </div>
+          <div class="admin">管理员：<span *ngFor="let item_ of item.managers;let i = index;">{{item_.name}}{{i != item.managers.length - 1 ? '、' : ''}}</span><span *ngIf="item.managers.length==0">暂无</span></div>
+        </div>
+        <div class="item" *ngIf="businessList.my_bussiness.length==0">
+          <div class="main no-list">
+            <img src="./../../assets/images/businessNo.png">
+            <p> 很抱歉，您没有可操作的业务，请找管理员添加</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--其他业务-->
+    <div *ngIf="businessList.other_bussiness.length">
+      <div class="title titleOther">其他业务</div>
+      <div class="business-list">
+        <div class="item" *ngFor="let item of businessList.other_bussiness">
+          <div class="operate">
+            <span class="fa fa-edit" title="编辑" (click)="editBusiness(item)" *ngIf="item.edit"></span>
+            <span class="fa fa-trash" title="删除" (click)="clearBusiness(item)" *ngIf="item.delete"></span>
+          </div>
+          <div class="main">
+            <div class="icon"></div>
+            <div class="info">
+              <div class="name">{{item.name}}</div>
+              <div class="desc">{{item.description}}</div>
+            </div>
+          </div>
+          <div class="admin">管理员：<span *ngFor="let item_ of item.managers;let i = index;">{{item_.name}}{{i != item.managers.length - 1 ? '、' : ''}}</span></div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- 弹窗 -->
+    <div class="bud-overlay" *ngIf="isShowEditdialog">
+      <div class="bud-operate-modal -small" style="width:700px;height: auto;min-height: 450px;">
+        <div class="header">
+          编辑业务信息
+          <i class="fa fa-times" (click)="dialogHide(1)"></i>
+        </div>
+        <div class="body businessDialogBody">
+          <!-- 步骤一 -->
+          <div class="steps">
+            <div class="stepItem">
+              <span class="stepNum" [ngClass]="{'active': currentStep>=0}">1</span>
+              <span>业务概要</span>
+            </div>
+            <div class="stepLine" [ngClass]="{'active': currentStep>=1}"></div>
+            <div class="stepItem">
+              <span class="stepNum" [ngClass]="{'active': currentStep>=1}">2</span>
+              <span>数据库设置</span>
+            </div>
+            <div class="stepLine" [ngClass]="{'active': currentStep==2}"></div>
+            <div class="stepItem">
+              <span class="stepNum" [ngClass]="{'active': currentStep==2}">3</span>
+              <span>完成</span>
+            </div>
+          </div>
+          <div *ngIf="currentStep==0">
+            <div class="mainContent">
+              <div class="mainItem">
+                <div>业务名称</div>
+                <div>
+                  <input placeholder="请输入业务名称" class="bud-input" [(ngModel)]="businessInfo.name">
+                </div>
+              </div>
+              <div class="mainItem">
+                <div>业务概要</div>
+                <div>
+                  <textarea placeholder="业务概要" class="textarea bud-input" [(ngModel)]="businessInfo.description"></textarea>
+                </div>
+              </div>
+              <div class="mainItem">
+                <div>管理员</div>
+                <div>
+                  <p-multiSelect [options]="userList" [(ngModel)]="businessInfo.managers" defaultLabel="请选择" [style]="{'width':'100%','line-height':'26px','font-size':'14px','padding-left':'4px'}"  [selectedItemsLabel]="'已选{0}位管理员'"
+                                 [maxSelectedLabels]="5"></p-multiSelect>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 步骤二 -->
+          <div *ngIf="currentStep==1" class="dbContent">
+            <div class="operateAdd">
+              <div>
+                <span class="fa fa-plus-circle" (click)="dbAdd()">添加业务数据库</span>
+              </div>
+            </div>
+            <table class="list-table">
+              <thead>
+              <tr>
+                <th>数据库名称</th>
+                <th>类型</th>
+                <th>地址</th>
+                <th>端口</th>
+                <th>操作</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of dbList;let i = index;">
+                <!--<ng-template *ngIf="!item.status && item.status!=-1">-->
+                  <td [title]="item.name" *ngIf="!item.status && item.status!=-1">{{item.name}}</td>
+                  <td [title]="item.dtype" *ngIf="!item.status && item.status!=-1">{{item.dtype}}</td>
+                  <td [title]="item.ip" *ngIf="!item.status && item.status!=-1">{{item.ip}}</td>
+                  <td [title]="item.port" *ngIf="!item.status && item.status!=-1">{{item.port}}</td>
+                  <td *ngIf="!item.status && item.status!=-1">
+                    <i (click)="dbEdit(item,i)"
+                       class="fa fa-pencil-square-o bud-icon-button slds-m-right--small slds-col--bump-left" title="编辑"></i>
+                    <i
+                      (click)="dbDelete(item,i)"
+                      class="fa fa-trash-o bud-icon-button" title="删除"></i>
+                  </td>
+                <!--</ng-template>-->
+
+              </tr>
+              </tbody>
+            </table>
+            <div *ngIf="dbList.length==0" class="list-empty">暂无业务数据库，请先添加</div>
+          </div>
+          <div *ngIf="currentStep==2">
+            <div class="reviewContent">
+              <div class="reviewItem">
+                <div class="title">概述</div>
+                <div>
+                  <div class="infoItem">
+                    <p>业务名称：</p>
+                    <p>{{businessInfo.name}}</p>
+                  </div>
+                  <div class="infoItem">
+                    <p>业务描述：</p>
+                    <p>{{businessInfo.description}}</p>
+                  </div>
+                  <div class="infoItem">
+                    <p>管理员：</p>
+                    <p><span *ngFor="let item of businessInfo.managers_new;let i = index;">{{item.status && item.status < 0 ? '' : (i==0? item.user_name : '、'+item.user_name)}}</span></p>
+                  </div>
+                </div>
+              </div>
+              <div class="reviewItem">
+                <div class="title lastTitle">数据库</div>
+                <div>
+                  <table class="list-table marginTop">
+                    <thead>
+                    <tr>
+                      <th>数据库名称</th>
+                      <th>类型</th>
+                      <th>地址</th>
+                      <th>端口</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let item of dbList">
+                      <td [title]="item.name" *ngIf="!item.status && item.status!=-1">{{item.name}}</td>
+                      <td [title]="item.dtype" *ngIf="!item.status && item.status!=-1">{{item.dtype}}</td>
+                      <td [title]="item.ip" *ngIf="!item.status && item.status!=-1">{{item.ip}}</td>
+                      <td [title]="item.port" *ngIf="!item.status && item.status!=-1">{{item.port}}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="btns">
+            <div class="goBack" *ngIf="currentStep!=0" (click)="goBack()">上一步</div>
+            <div class="goNext" *ngIf="currentStep!=2" (click)="goNext()">下一步</div>
+            <div class="finish" *ngIf="currentStep==2" (click)="finish()">完成</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 数据库编辑弹窗 -->
+    <div class="bud-overlay" *ngIf="isShowDbEditdialog">
+      <div class="bud-operate-modal -small" style="width:700px;height: auto;min-height: 470px;">
+        <div class="header">
+          编辑业务数据库
+          <i class="fa fa-times" (click)="dialogHide(2)"></i>
+        </div>
+        <div class="body businessDialogBody">
+          <div>
+            <div class="mainContent">
+              <div class="mainItem">
+                <div>数据库类型</div>
+                <div>
+                  <p-dropdown [options]="dbTypeList" [(ngModel)]="dbInfo.dtype" [autoWidth]="false" [placeholder]="'请选择'" (onChange)="onSelectedChange($event, true)" [style]="{'width':'100%','line-height':'26px','font-size':'14px','padding-left':'4px'}"></p-dropdown>
+                </div>
+              </div>
+              <div class="mainItem">
+                <div>数据库地址</div>
+                <div class="dbIPAndHost">
+                  <input placeholder="数据库地址" [(ngModel)]="dbInfo.ip" class="bud-input dbIP">
+                  <input placeholder="端口" [(ngModel)]="dbInfo.port" class="bud-input dbHost">
+                </div>
+              </div>
+              <div class="mainItem">
+                <div>数据库名称</div>
+                <div>
+                  <input placeholder="数据库名称" [(ngModel)]="dbInfo.name" class="bud-input">
+                </div>
+              </div>
+              <div class="mainItem">
+                <div>账密</div>
+                <div>
+                  <div class="dbAccounts">
+                    <input placeholder="账号" [(ngModel)]="dbInfo.user" class="bud-input">
+                    <input placeholder="密码" [(ngModel)]="dbInfo.password" class="bud-input password-input" [type]="isShowPassword?'text':'password'">
+                    <span class="fa showPassword" [ngClass]="{'fa-eye': isShowPassword, 'fa-eye-slash': !isShowPassword}" (click)="changeInputType()"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="btns">
+            <div class="commit"  (click)="commit()">提交</div>
+            <div class="testConnect"  (click)="testConnect()">测试连接</div>
+            <div class="cancel"  (click)="dialogHide(2)">取消</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+

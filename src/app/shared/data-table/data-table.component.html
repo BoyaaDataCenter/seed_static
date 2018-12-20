@@ -1,0 +1,85 @@
+<div>
+  <div class="slds-grid slds-grid--vertical-align-center" style="padding: 2.5px 7px;">
+    <div class="bud-search">
+      <i class="fa fa-search" aria-hidden="true"></i>
+      <input type="text" pInputText placeholder="输入关键字搜索" #gb/>
+    </div>
+    <div class="slds-col--bump-left">
+      <span class="dimSelect slds-m-right--small" *ngIf="dimList.length>0">
+        <span class="slds-m-right--small">维度选择</span>
+        <p-multiSelect [options]="dimList" [(ngModel)]="dimSelected" (onChange)="selectDimValue($event, true)" defaultLabel="请选择" [style]="{minWidth:'100px'}" [selectedItemsLabel]="'已选{0}个维度'"
+                       [maxSelectedLabels]="3" [limitNum]="limitNum"></p-multiSelect>
+      </span>
+      <span class="dimSelect slds-m-right--small" *ngIf="dimList.length>0">
+        <span class="slds-m-right--small">按维度展开</span>
+        <p-multiSelect [options]="tableDim" [(ngModel)]="tableDimValue" (onChange)="changeDataByDim($event, true)" defaultLabel="请选择" [style]="{minWidth:'100px'}" [selectedItemsLabel]="'已选{0}个维度'"
+                       [maxSelectedLabels]="3"></p-multiSelect>
+      </span>
+      <span (click)="copyClipboard()" class="bud-icon-text-button slds-m-right--small">
+        <i class="fa fa-clipboard slds-m-right--x-small"></i>复制
+      </span>
+      <span (click)="exportCSV()" class="bud-icon-text-button">
+        <i class="fa fa-download slds-m-right--x-small"></i>导出 CSV
+      </span>
+    </div>
+  </div>
+  <p-dataTable
+    #myDataTable
+    [rowGroupMode]="groupField?'subheader':null"
+    [groupField]="groupField"
+    [scrollHeight]="scrollHeight"
+    [frozenWidth]="frozenWidth + 'px'"
+    [unfrozenWidth]="unfrozenWidth + 'px'"
+    [scrollable]="scrollXAble || scrollYAble"
+    [exportFilename]="exportFilename"
+    [value]="_data"
+    [rows]="rows"
+    [paginator]="paginator"
+    [pageLinks]="5"
+    [globalFilter]="gb"
+    [rowsPerPageOptions]="[5,10,20,50,99]">
+    <p-column
+      *ngIf="hasOperate || hasLink || hasEdit || hasDelete || hasDetail"
+      header="操作"
+      [frozen]="otherFrozen"
+      [style]="{'width':'50px'}">
+      <ng-template let-col let-rowd="rowData" pTemplate="body">
+        <div class="slds-grid slds-grid--align-center slds-grid--vertical-align-center" style="height: 25px;">
+          <i *ngIf="hasLink" class="fa fa-external-link bud-icon-button slds-m-right--small" (click)="linkToDetail(rowd)" title="查看详情"></i>
+          <i *ngIf="hasDetail" class="fa fa-external-link bud-icon-button slds-m-right--small" (click)="rowDetail(rowd)" title="查看详情"></i>
+          <i *ngIf="hasOperate" class="fa fa-bar-chart bud-icon-button" (click)="showTrend(rowd)" title="查看趋势"></i>
+          <i *ngIf="hasEdit" class="fa fa-pencil-square-o bud-icon-button" (click)="rowEdit(rowd)" title="编辑"></i>
+          <i *ngIf="hasDelete && rowd._hasDelete" class="fa fa-trash-o bud-icon-button slds-m-left--small" (click)="rowDelete(rowd)" title="删除"></i>
+        </div>
+      </ng-template>
+    </p-column>
+    <p-column *ngFor="let col of _columns"
+              [field]="col.field"
+              [header]="col.header"
+              [sortable]="col.sortable"
+              [frozen]="col.frozen"
+              [style]="{'width': col.width ? col.width + 'px' : columnWidth + 'px'}">
+      <ng-template let-col let-rowd="rowData" pTemplate="body">
+        <div class="slds-grid slds-grid--vertical-align-center"
+             [ngClass]="{'slds-grid--align-end': !rowd['_alignLeft']}"
+             style="height: 25px;">
+          <span *ngIf="isNumber(rowd[col.field])"
+                class="slds-col slds-grow ">{{rowd[col.field]|numberFormat:2}}</span>
+          <span *ngIf="!isNumber(rowd[col.field])"
+                [ngClass]="addPercentClass(rowd[col.field])"
+                class="table-td" title="{{rowd[col.field]}}">
+            {{rowd[col.field] || '-'}}
+          </span>
+          <span *ngIf="showRatio(rowd[col.field + '_ratio'])"
+                  class="dim-ratio slds-text-align--right slds-col slds-no-flex"
+                  style="width: 45px;"
+                  [ngClass]="addPercentClass(rowd[col.field + '_ratio'])">
+            {{formatRatio(rowd[col.field + '_ratio'])}}
+          </span>
+        </div>
+      </ng-template>
+    </p-column>
+  </p-dataTable>
+</div>
+
+

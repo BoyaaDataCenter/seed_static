@@ -1,0 +1,74 @@
+<app-sys-header></app-sys-header>
+<div class="role-menu-list-header">
+  <div>角色菜单管理</div>
+</div>
+<!--页面列表-->
+<div class="role-menu-list-main">
+  <div class="menuHeader">
+    <!--角色选择器-->
+    <div class="roleSelector">
+      <app-single-select *ngIf="show"
+                         [data]="roleIdList"
+                         [titleList]="roleNameList"
+                         [selected]="curSelected"
+                         [horizonNumber]="horizonNumber"
+                         (selectedChange)="onSelected($event)"></app-single-select>
+    </div>
+    <div class="saveMenu" (click)="updateMenu()">保存修改</div>
+  </div>
+  <div class="title">
+    <div>菜单权限</div>
+    <div>是否可见</div>
+  </div>
+  <div class="bud-tree" id=""
+       *ngIf="menuList && menuList.length">
+    <div
+      class="item -level-one"
+      *ngFor="let node1 of menuList;let levelOneIndex=index;">
+      <div class="header" *ngIf="!node1.status">
+        <span class="menuName">{{node1.name}}</span>
+        <span class="operate">
+            <div class="switch-tgl">
+              <input class="input" [(ngModel)]="node1['role_permission']" (ngModelChange)="updateStatus(node1,levelOneIndex)" [attr.id]="node1.menu_id" type="checkbox">
+              <label [attr.for]="node1.menu_id" class="label"></label>
+            </div>
+        </span>
+      </div>
+      <ng-container *ngIf="node1['sub_menus'] && node1['sub_menus'].length">
+        <div class="body sortMenu">
+          <div
+            class="item -level-two"
+            *ngFor="let node2 of node1['sub_menus'];let levelTwoIndex=index;">
+            <div class="header" *ngIf="!node2.status">
+              <span class="menuName">{{node2.name}}</span>
+              <span class="operate">
+                <div class="switch-tgl">
+                  <input class="input" [(ngModel)]="node2['role_permission']" (ngModelChange)="updateStatus(node2,levelOneIndex,levelTwoIndex)" [attr.id]="node2.menu_id" type="checkbox">
+                  <label [attr.for]="node2.menu_id" class="label"></label>
+                </div>
+              </span>
+            </div>
+            <ng-container *ngIf="node2['sub_menus'] && node2['sub_menus'].length">
+              <div class="body sortMenu">
+                <div
+                  class="item -level-three"
+                  *ngFor="let node3 of node2['sub_menus'];let levelThreeIndex=index;">
+                  <div class="header" *ngIf="!node3.status">
+                    <span class="menuName">{{node3.name}}</span>
+                    <span class="operate">
+                      <div class="switch-tgl">
+                        <input class="input" [(ngModel)]="node3['role_permission']" (ngModelChange)="updateStatus(node3,levelOneIndex,levelTwoIndex,levelThreeIndex)" [attr.id]="node3.menu_id" type="checkbox">
+                        <label [attr.for]="node3.menu_id" class="label"></label>
+                      </div>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <div class="noList" *ngIf="menuList.length==0">暂无菜单，请先添加</div>
+</div>

@@ -1,0 +1,22 @@
+<div class="app-help">
+  <i [class]="icon"
+     (click)="showHelpInfo()">
+  </i>
+  <div
+    [ngClass]="{'-active': helpShow}"
+    class="app-help__detail" (click)="detailClick()">
+    <ng-container *ngIf="helpInfoList.length">
+      <div
+        class="app-help__info"
+        *ngFor="let item of helpInfoList">
+        <span
+          *ngIf="item.label"
+          class="app-hel__title">{{item.label}}：</span>
+        {{item.value}}
+      </div>
+    </ng-container>
+    <ng-container *ngIf="!helpInfoList.length">
+      <div class="app-help__none" (click)="noneClick()">暂无备注信息:-D</div>
+    </ng-container>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+.#{ $prefix }button {
+  padding: 0 30px 2px;
+  background: #f4f4f4;
+  // border: 1px solid #DDD;
+  color: #666;
+  // box-shadow: inset #DDD 0 -2px 0 0;
+  transition: background .1s ease-in-out,border .1s ease-in-out;
+  vertical-align: middle;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  border-radius: 4px;
+  height: 40px;
+  font-size: 14px;
+  cursor: pointer;
+  &:disabled {
+    cursor: default;
+    background: #DDD !important;
+    border-color: #CCC !important;
+    color: #AAA !important;
+    box-shadow: none;
+  }
+
+  &.-origin {
+    color: #FFF;
+    background: #df4f00;
+    border-color: #c04400;
+    box-shadow: none;
+    border:none;
+    // box-shadow: inset #982b0e 0 -2px 0 0;
+    border-bottom-color: #982b0e;
+    &:hover {
+      background: #e2601a;
+    }
+  }
+}
+
+.#{ $prefix }text-button {
+  color: #999;
+  padding: 0 10px;
+  font-size: 12px;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  &:hover {
+    color: #666;
+  }
+}

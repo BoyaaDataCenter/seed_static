@@ -1,0 +1,45 @@
+.compList{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
+  
+  .addQueryComp{
+    vertical-align: middle;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    border-radius: 3px;
+    cursor: pointer;
+    color: #fff;
+    background: #df4f00;
+    border: 1px solid #c04400;
+    padding: 0 10px;
+    line-height: 22px;
+    z-index: 10;
+    margin-left: 10px;
+    
+    &:hover{
+      background: #e2601a;
+    }
+  }
+}
+
+.reportQueryDialogBody{
+  font-size: 16px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  padding: 12px;
+  
+  .item{
+    padding: 10px 0;
+    width: 100%;
+    
+    div{
+      padding: 3px 0;
+    }
+  }
+  
+}

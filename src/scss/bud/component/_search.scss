@@ -1,0 +1,13 @@
+.#{ $prefix }search {
+  position: relative;
+  > .fa-search {
+    position: absolute;
+    top: 50%;
+    margin-top: -6.5px;
+    left: 5px;
+    color: #929292;
+  }
+  > input {
+    padding-left: 25px;
+  }
+}

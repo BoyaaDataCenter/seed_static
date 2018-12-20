@@ -1,0 +1,41 @@
+<div class="app-main">
+  <!--主页-->
+  <nav class="bud-nav" style="min-width: 160px;"  *ngIf="menuListVisible">
+    <!--logo 及标题-->
+    <div class="top" (mouseleave)="businessListVisible = false">
+      <a class="logo">
+        <img [attr.src]="'assets/images/logo1.png'" alt="" (click)="jumpToBusinessList()">
+      </a>
+      <span class="title">{{businessSelected.name}}</span>
+      <span class="trigger" [ngClass]="{'-active': businessListVisible}" (mouseenter)="businessListVisible = true" >
+        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+      </span>
+      <div class="bud-nav-game-list" [ngClass]="{'-active': businessListVisible}">
+        <div class="item paddingItem"
+             *ngFor="let item of businessList;"
+             (click)="changeBusiness(item)"
+             [ngClass]="{'-active': item.id == businessSelected.id}">
+          <span>{{item.name}}</span>
+        </div>
+        <div class="item checkAll paddingItem"
+             (click)="jumpToBusinessList()">
+          <i class="fa fa-list-alt"></i><span>查看所有业务</span>
+        </div>
+      </div>
+    </div>
+    <!--/logo 及标题-->
+    <!--导航菜单-->
+    <div class="bud-nav-menu-wrap bud-scroll" appSealScroll>
+      <p-panelMenu [model]="items"></p-panelMenu>
+    </div>
+  </nav>
+  <div class="bud-main" [ngClass]="{'margin-left0': !menuListVisible}">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+<p-confirmDialog
+  header="确认操作"
+  acceptLabel="确认"
+  rejectLabel="取消"
+  icon="fa fa-question-circle" width="425"></p-confirmDialog>

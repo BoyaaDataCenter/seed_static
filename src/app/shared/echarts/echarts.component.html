@@ -1,0 +1,28 @@
+<div>
+  <div [style.padding-bottom]="pageShow ? '25px': '0px'"
+  >
+    <div class="chart-bar">
+      <div class="indexs-select" *ngIf="indexsList.length>0">
+        <span>指标选择</span>
+        <p-dropdown [options]="indexsList" [ngModel]="indexsSelected" [autoWidth]="false" (onChange)="selectIndexsValue($event, true)" [placeholder]="'请选择'" [style]="{'min-width':'100px'}"></p-dropdown>
+      </div>
+      <div class="dim-select" *ngIf="dimList.length>0">
+        <span>维度选择</span>
+        <p-multiSelect [options]="dimList" [(ngModel)]="dimSelected" (onChange)="selectDimValue($event, true)" defaultLabel="请选择" [style]="{minWidth:'100px'}" [selectedItemsLabel]="'已选{0}个维度'"
+                       [maxSelectedLabels]="3" [limitNum]="limitNum"></p-multiSelect>
+        <!--<p-dropdown [options]="dimList" [ngModel]="dimSelected" [autoWidth]="false"  [placeholder]="'请选择'" [style]="{'min-width':'100px'}"></p-dropdown>-->
+      </div>
+    </div>
+    <div #chart
+    [style.height]="height"
+    [style.width]="width"
+    ></div>
+  </div>
+  <div class="paginator">
+    <p-paginator
+      *ngIf="pageShow"
+      [style]="{'border-left': 0, 'border-right': 0, 'border-bottom': 0}"
+      (onPageChange)="paginate($event)"
+      [rows]="pageRows" [totalRecords]="pageTotalRecords"></p-paginator>
+  </div>
+</div>

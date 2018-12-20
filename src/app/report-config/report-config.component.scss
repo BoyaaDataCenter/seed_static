@@ -1,0 +1,234 @@
+#reportConfig{
+  width: 100%;
+  height: calc( 100% - 50px );
+
+  >.compMenu{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: fixed;
+    z-index: 1000;
+    -webkit-transform: translateZ(0);
+    top: 0;
+    left: 0;
+    bottom: 0;
+    //width: 16%;
+    width: 240px;
+    background: #353b43;
+
+    .compGroup{
+      width: 100%;
+
+      .groupTitle{
+        display: block;
+        border-radius: 0;
+        border: 0;
+        background: #353b43;
+        position: relative;
+        cursor: pointer;
+
+        a{
+          text-decoration: none;
+          color: #a3b0bf;
+          padding: 18px 0 18px 15px;
+          font-size: 14px;
+          line-height: 14px;
+          display: block;
+        }
+
+        span{
+          position: absolute;
+          right: 10px;
+          top: 17px;
+          color: #a3b0bf;
+        }
+      }
+
+      .groupTitle:hover{
+        background-color: #262a2f;
+      }
+
+      .itemList{
+        background-color: #262a2f;
+        //padding: 4px 0;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        //display: none;
+        height: 0;
+        overflow: hidden;
+        .item{
+
+          line-height: 1.2;
+          color: #a3b0bf;
+          border: 0;
+          border-radius: 0;
+          display: block;
+          outline: none;
+          text-decoration: none;
+          font-weight: 400;
+          padding: 10px;
+
+          img{
+            width: 100px;
+            height: 62px;
+            cursor: pointer;
+          }
+
+          p{
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
+        }
+      }
+    }
+
+    .compGroup.active{
+      .groupTitle{
+        a{
+          color: #fff3ec;
+          font-weight: bold;
+        }
+        span{
+          color: #fff3ec;
+        }
+      }
+      .itemList{
+        height: 100%;
+      }
+    }
+  }
+
+  >.main{
+    //width: 100%;
+    margin-left: 240px;
+    min-width: 860px;
+    background-color: #f0f0f0;
+    position: relative;
+    height: 100%;
+
+    >.header{
+      height: 50px;
+      width: 100%;
+      background-color: #fbfbfb;
+      border-bottom: 1px solid #ddd;
+
+      .item{
+        display: none;
+      }
+    }
+
+    >.body{
+      position: relative;
+      padding: 10px 15px;
+      height: calc( 100% - 50px );
+
+      .item{
+        display: inline-block;
+      }
+      .drag > img, .drag > p{
+        display: none;
+      }
+
+      .content{
+        //background-color: #b0b0b0;
+        min-width: 300px;
+        min-height: 150px;
+        border-radius: 4px;
+        border: 1px solid #cccccc;
+        display: inline-flex;
+        margin: 10px;
+        position: relative;
+
+        >.header{
+          height: 30px;
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          cursor: move;
+        }
+
+        >.main{
+          height: 100%;
+          //position: relative;
+          //top: -30px;
+          width: 100%;
+
+        }
+
+
+        .resizableHandle {
+          background-image: none;
+          cursor: nwse-resize;
+          position: absolute;
+          width: 20px;
+          height: 20px;
+          bottom: 0;
+          right: 0;
+          cursor: nwse-resize;
+          z-index: 10;
+        }
+
+        .resizableHandle:after,.resizableHandle:before {
+          content: "";
+          display: block;
+          position: absolute;
+          height: 2px;
+          border-radius: 1px;
+          background-color: #888888;
+          transition: background-color .25s ease;
+          top: 50%;
+          left: 50%;
+          border: 0;
+        }
+
+        .resizableHandle:before {
+          width: 20px;
+          transform: translate(-50%,-50%) rotate(-45deg)
+        }
+
+        .resizableHandle:after {
+          width: 12px;
+          transform: translate(-3px,2px) rotate(-45deg)
+        }
+
+        .resizableHandle:hover:after,.resizableHandle:hover:before {
+          background-color: #aaaaaa;
+        }
+      }
+
+    }
+
+    .savePage,.goBack{
+      vertical-align: middle;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      border-radius: 3px;
+      cursor: pointer;
+      color: #fff;
+      background: #df4f00;
+      border: 1px solid #c04400;
+      padding: 0 10px;
+      line-height: 22px;
+      position: absolute;
+      right: 10px;
+      top:13px;
+      z-index: 10;
+
+      &:hover{
+        background: #e2601a;
+      }
+    }
+
+    .goBack{
+      right: 100px;
+    }
+  }
+}

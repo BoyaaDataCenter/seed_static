@@ -1,0 +1,124 @@
+#sysUserList{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+
+  .header{
+    width: 100%;
+  }
+
+  .main{
+    width: 960px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin: 50px 15px 0;
+
+    .sys-user-header{
+      border-bottom: 1px solid #ddd;
+      padding: 0 15px;
+      color: #777;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      font-size: 15px;
+      font-weight: bold;
+      border-bottom: 1px solid #d9d9d9;
+      height: 40px;
+      background-color: #f0f0f0;
+    }
+
+    .sys-user-main{
+      margin: 20px 15px;
+      background: #fff;
+      border: 1px solid #DDD;
+      border-radius: 0 0 4px 4px;
+      position: relative;
+      padding-bottom: 8px;
+
+
+      .list-table {
+        width: 100%;
+        table-layout: fixed;
+        border-collapse: collapse;
+        border-spacing: 0;
+        th{
+          padding: 0 15px;
+          border-bottom: 1px solid #DDD;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          vertical-align: top;
+          font-weight: 600;
+          background-color: #f2f2f2;
+          color: #222;
+          font-size: .9em;
+          height: 35px;
+          line-height: 35px;
+          text-align: left;
+          min-width: 150px;
+        }
+        td{
+          text-align: left;
+          height: 40px;
+          line-height: 40px;
+          padding: 0 15px;
+          border-bottom: 1px solid #DDD;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          vertical-align: top;
+        }
+        tr:hover {
+          td{
+            background-color: #DDD;
+            cursor: pointer;
+          }
+        }
+      }
+
+      .list-empty {
+        color: #aaa;
+        text-align: center;
+        height: 60px;
+        line-height: 60px;
+      }
+
+      .paginatorDiv{
+        margin-top: 8px;
+      }
+    }
+  }
+}
+
+.userListDialogBody{
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  padding: 12px;
+
+  .item{
+    padding: 10px 0;
+    width: 100%;
+
+    div{
+      padding: 3px 0;
+    }
+
+    /deep/ .ui-radiobutton-icon{
+      display: block !important;
+      font-size: .6em;
+      line-height: inherit !important;
+    }
+  }
+
+  .bud-input{
+    margin: 0;
+    width: 100%;
+  }
+}
+

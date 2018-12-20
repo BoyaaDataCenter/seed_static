@@ -1,0 +1,31 @@
+.#{ $prefix }bar {
+  display: flex;
+  align-items: center;
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 16%;
+  min-width: 840px;
+  right: 0;
+  background-color: #fff;
+  border-bottom: 1px solid #DDD;
+  height: 50px;
+  padding: 0 15px;
+  -webkit-transform: translateZ(0);
+}
+
+.#{ $prefix }sub-bar {
+  display: flex;
+  align-items: center;
+  position: fixed;
+  z-index: 998;
+  top: 50px;
+  left: 16%;
+  min-width: 840px;
+  right: 0;
+  height: 40px;
+  background-color: rgb(251, 251, 251);
+  border-bottom: 1px solid #DDD;
+  padding: 0 15px;
+  -webkit-transform: translateZ(0);
+}

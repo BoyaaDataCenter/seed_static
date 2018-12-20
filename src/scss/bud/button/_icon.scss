@@ -1,0 +1,27 @@
+.#{ $prefix }icon-button {
+  cursor: pointer;
+  font-size: 14px;
+  color: #353b43;
+  &:hover {
+    color: #df4f00;
+  }
+
+  &.-active {
+    color: #df4f00;
+  }
+}
+
+.#{ $prefix }icon-text-button {
+  cursor: pointer;
+  font-size: 12px;
+  color: #353b43;
+  >.fa {
+    color: #df4f00;
+    vertical-align: middle;
+  }
+  &:hover {
+    >.fa {
+      color: #353b43;
+    }
+  }
+}

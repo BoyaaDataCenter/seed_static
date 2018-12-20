@@ -1,0 +1,18 @@
+<div id="globalHeader">
+  <div class="logo-div" (click)="goIndex()">
+    <img src="./../../assets/images/logo1.png">
+    <span>seed自助报表</span>
+  </div>
+  <div class="btns">
+    <i class="fa fa-users" title="查看系统用户" (click)="checkSysUser()" *ngIf="isSuperAdmin"></i>
+    <div class="userImg">
+      <img alt="头像" #avatarImg>
+      <span>{{userInfo.name}}</span>
+      <div class="opers">
+        <p (click)="checkUserInfo()" *ngIf="opersList['userInfo']"><i class="fa fa-user"></i>个人信息</p>
+        <p (click)="goBack()" *ngIf="opersList['goBack']"><i class="fa fa-arrow-left"></i>返回上页</p>
+        <p (click)="signOut()" *ngIf="opersList['signOut']"><i class="fa fa-sign-out"></i>退出登录</p>
+      </div>
+    </div>
+  </div>
+</div>

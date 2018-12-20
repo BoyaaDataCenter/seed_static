@@ -1,0 +1,28 @@
+.#{ $formbase__prefix }input {
+
+	appearance: none;
+	box-sizing: border-box;
+	width: 100%;
+	margin: 0 0 $formbase__gutter/2;
+	padding: $formbase__gutter/3;
+	background: $formbase__background;
+	border: 1px solid $formbase__border;
+	box-shadow: $formbase__shadow;
+	border-radius: $formbase__radius;
+	outline: none;
+	resize: vertical;
+	transition: border-color $formbase__duration $formbase__timing;
+
+	&[disabled] {
+		border-color: lighten($formbase__border, 5%);
+		background-color: darken($formbase__background, 5%);
+		box-shadow: none;
+		cursor: not-allowed;
+	}
+
+	&:focus {
+		border-color: $formbase__active;
+    box-shadow: $formbase__active-shadown;
+	}
+
+}

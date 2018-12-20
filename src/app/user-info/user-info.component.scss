@@ -1,0 +1,260 @@
+#userInfo{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+
+  .header{
+    width: 100%;
+  }
+
+  .main{
+    width: 960px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin: 50px 15px 0;
+
+    .account-user-header{
+      border-bottom: 1px solid #ddd;
+      padding: 0 15px;
+      color: #777;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      font-size: 15px;
+      font-weight: bold;
+      border-bottom: 1px solid #d9d9d9;
+      height: 40px;
+      background-color: #f0f0f0;
+    }
+
+    .account-user-main{
+      margin: 20px 15px;
+      background: #fff;
+      padding: 40px;
+      border: 1px solid #DDD;
+      border-radius: 0 0 4px 4px;
+      position: relative;
+
+      .opersBtn{
+        position: absolute;
+        width: 100%;
+        right: 0;
+        top: 0;
+        height: 50px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+      }
+
+      .upDateBtn, .editBtn, .saveBtn{
+        width: 80px;
+        height: 30px;
+        color: #fff;
+        background-color: #5cb099;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-right: 10px;
+
+        &:hover{
+          background-color: #74ceb5;
+        }
+      }
+
+      .saveBtn{
+        background-color: #e2601a;
+
+        &:hover{
+          background-color: #e2601a;
+        }
+      }
+
+      .panel-body{
+        display: flex;
+      }
+
+      .avatar{
+        width: 150px;
+        display: inline-block;
+        vertical-align: middle;
+        border-radius: 3px;
+        margin-right: 50px;
+        background-color: #fff;
+        box-sizing: border-box;
+        overflow-y: hidden;
+        text-align: center;
+        img {
+          padding: 5px;
+          width: 150px;
+          height: 150px;
+          border: 2px solid #ddd;
+        }
+
+        div{
+          margin: 10px 0 0 0;
+          position: relative;
+
+          #uploadFrom, #uploadImage{
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+
+            &:hover{
+              cursor: pointer;
+            }
+          }
+        }
+      }
+
+      .user-msg{
+        width: 640px;
+
+        .account-msg{
+          display: flex;
+          flex-wrap: wrap;
+
+          p{
+            color: #777;
+            font-size: 15px;
+            display: inline-flex;
+            justify-content: flex-start;
+            width: 100%;
+            margin: 8px 0;
+            align-items: center;
+
+            input{
+              width: 50%;
+              margin: 0;
+            }
+          }
+
+        }
+      }
+    }
+  }
+}
+
+/*
+.account-user-main{
+  margin: 20px 15px 0;
+  background: #fff;
+  padding: 50px 0;
+  border: 1px solid #DDD;
+  border-radius: 0 0 4px 4px;
+  position: relative;
+
+  .operBtns{
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 50px;
+    top: 0;
+    right: 0;
+
+    .showEditBtn, .showSaveBtn{
+      width: 80px;
+      height: 30px;
+      color: #fff;
+      background-color: #30bc73;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 10px;
+
+      &:hover{
+        background-color: #44cf86;
+      }
+    }
+
+    .showSaveBtn{
+      background-color: #e2601a;
+
+      &:hover{
+        background-color: #e2601a;
+      }
+    }
+  }
+  .avatar{
+    width: 150px;
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 3px;
+    margin: 0 50px;
+    background-color: #fff;
+    box-sizing: border-box;
+    overflow-y: hidden;
+    img {
+      padding: 5px;
+      max-width: 100%;
+      border: 2px solid #ddd;
+    }
+  }
+  .panel-body{
+    display: flex;
+  }
+
+  .user-msg{
+    .user-name{
+      font-size: 16px;
+      color: #428BCA
+    }
+
+    .account-msg{
+      display: flex;
+      flex-wrap: wrap;
+      .email, .login-time, .create-time{
+        color: #777;
+        font-size: 14px;
+        display: inline-flex;
+        justify-content: flex-start;
+        width: 50%;
+        margin: 10px 0;
+      }
+    }
+  }
+
+
+}
+.userInfoDialogBody{
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  padding: 12px;
+
+  .item{
+    padding: 10px 0;
+    width: 100%;
+
+    div{
+      padding: 3px 0;
+    }
+  }
+
+  .bud-input{
+    margin: 0;
+    width: 100%;
+  }
+}
+
+/deep/ .ui-radiobutton-box.ui-state-active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+*/
+

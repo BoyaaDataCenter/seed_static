@@ -1,0 +1,131 @@
+<app-sys-header></app-sys-header>
+<div class="menu-list-header">
+  <div>菜单管理</div>
+</div>
+<!--页面列表-->
+<div class="menu-list-main">
+  <div class="menuHeader">
+    <div class="addLevelOneMenu" (click)="menuAdd()">添加一级菜单</div>
+    <div class="saveMenu" (click)="updateMenu()">保存修改</div>
+  </div>
+  <div class="tipText">
+    温馨提示：
+    <p>1. 菜单支持拖拽，鼠标按住菜单项，即可上下拖拽更换位置</p>
+    <p>2. 编辑菜单之后，需要点击右上角的“保存修改”按钮来保存新配置的菜单</p>
+  </div>
+  <div class="bud-tree sortMenu" id="sortMenu"
+       *ngIf="menuList && menuList.length">
+    <div
+      class="item -level-one"
+      *ngFor="let node1 of menuList;let levelOneIndex=index;">
+      <div class="header" *ngIf="!node1.status" draggable="true"
+           (dragstart)="ondragstart($event, levelOneIndex)" (dragend)="ondragend($event)"
+           (dragover)="ondragover($event)" (dragenter)="ondragenter($event)"
+           (drop)="ondrop($event, levelOneIndex)" (dragleave)="ondragleave($event)">
+        <!--<i class="fa fa-arrows"></i>-->
+        <span>{{node1.name}}</span>
+        <span class="operate">
+      <!--<i class="fa fa-arrow-up bud-icon-button "
+         (click)="sort(true, levelOneIndex)"
+         title="上移"></i>
+      <i class="fa fa-arrow-down bud-icon-button "
+         (click)="sort(false, levelOneIndex)"
+         title="下移"></i>-->
+      <i class="fa fa-pencil-square-o bud-icon-button "
+         (click)="menuEdit(levelOneIndex)"
+         title="编辑"></i>
+      <i class="fa fa-trash-o bud-icon-button "
+         (click)="menuDelete(levelOneIndex)"
+         title="删除"></i>
+      <i class="fa fa-plus bud-icon-button "
+         (click)="menuAdd(levelOneIndex)"
+         title="添加次级菜单"></i>
+      </span>
+      </div>
+      <ng-container *ngIf="node1['sub_menus'] && node1['sub_menus'].length">
+        <div class="body sortMenu">
+          <div
+            class="item -level-two"
+            *ngFor="let node2 of node1['sub_menus'];let levelTwoIndex=index;">
+            <div class="header" *ngIf="!node2.status" draggable="true"
+                 (dragstart)="ondragstart($event, levelOneIndex, levelTwoIndex)" (dragend)="ondragend($event)"
+                 (dragover)="ondragover($event)" (dragenter)="ondragenter($event)"
+                 (drop)="ondrop($event, levelOneIndex, levelTwoIndex)" (dragleave)="ondragleave($event)">
+              <!--<i class="fa fa-arrows"></i>-->
+              <span>{{node2.name}}</span>
+              <span class="operate">
+              <!--<i class="fa fa-arrow-up bud-icon-button"
+                 (click)="sort(true, levelOneIndex, levelTwoIndex)"
+                 title="上移"></i>
+              <i class="fa fa-arrow-down bud-icon-button "
+                 (click)="sort(false, levelOneIndex, levelTwoIndex)"
+                 title="下移"></i>-->
+              <i class="fa fa-pencil-square-o bud-icon-button "
+                 (click)="menuEdit(levelOneIndex, levelTwoIndex)"
+                 title="编辑"></i>
+              <i class="fa fa-trash-o bud-icon-button "
+                 (click)="menuDelete(levelOneIndex, levelTwoIndex)"
+                 title="删除"></i>
+              <i class="fa fa-plus bud-icon-button "
+                 (click)="menuAdd(levelOneIndex, levelTwoIndex)"
+                 title="添加次级菜单"></i>
+            </span>
+            </div>
+            <ng-container *ngIf="node2['sub_menus'] && node2['sub_menus'].length">
+              <div class="body sortMenu">
+                <div
+                  class="item -level-three"
+                  *ngFor="let node3 of node2['sub_menus'];let levelThreeIndex=index;">
+                  <div class="header" *ngIf="!node3.status" draggable="true"
+                       (dragstart)="ondragstart($event, levelOneIndex, levelTwoIndex, levelThreeIndex)"
+                       (dragend)="ondragend($event)"
+                       (dragover)="ondragover($event)" (dragenter)="ondragenter($event)"
+                       (drop)="ondrop($event, levelOneIndex, levelTwoIndex, levelThreeIndex)" (dragleave)="ondragleave($event)">
+                    <!--<i class="fa fa-arrows"></i>-->
+                    <span>{{node3.name}}</span>
+                    <span class="operate">
+                    <!--<i class="fa fa-arrow-up bud-icon-button"
+                       (click)="sort(true, levelOneIndex, levelTwoIndex, levelThreeIndex)"
+                       title="上移"></i>
+                    <i class="fa fa-arrow-down bud-icon-button "
+                       (click)="sort(false, levelOneIndex, levelTwoIndex, levelThreeIndex)"
+                       title="下移"></i>-->
+                    <i class="fa fa-pencil-square-o bud-icon-button "
+                       (click)="menuEdit(levelOneIndex, levelTwoIndex, levelThreeIndex)"
+                       title="编辑"></i>
+                    <i class="fa fa-trash-o bud-icon-button "
+                       (click)="menuDelete(levelOneIndex, levelTwoIndex, levelThreeIndex)"
+                       title="删除"></i>
+                  </span>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <div class="noList" *ngIf="menuList.length==0">暂无菜单，请先添加</div>
+
+  <!-- 弹窗 -->
+  <div class="bud-overlay" *ngIf="dialogVisible">
+    <div class="bud-operate-modal -small" style="width:500px;height: 250px">
+      <div class="header">
+        {{editType==1?'新增菜单':'编辑菜单'}}
+        <i class="fa fa-times" (click)="dialogHide()"></i>
+      </div>
+      <div class="body menuListDialogBody">
+        <div class="item">
+          <div>菜单名称</div>
+          <input class="bud-input" [(ngModel)]="menuInfo.name">
+        </div>
+      </div>
+      <div class="footer">
+        <button class="bud-text-button slds-col--bump-left slds-m-right--small" (click)="dialogHide()">取消</button>
+        <button class="bud-button -origin" (click)="enSure()">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+

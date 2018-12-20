@@ -1,0 +1,15 @@
+.#{ $prefix }badge {
+  display: inline-block;
+  vertical-align: middle;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  transition: all .1s ease-in-out;
+  border-radius: 4px;
+  font-size: 12px;
+  height: 28px;
+  background: #ececec;
+  color: #494949;
+  padding: 0 10px;
+  line-height: 28px;
+}

@@ -1,0 +1,81 @@
+<div id="sysUserList">
+  <div class="header">
+    <app-global-header></app-global-header>
+  </div>
+  <div class="main">
+    <div class="sys-user-header">
+      系统用户管理
+    </div>
+    <div class="sys-user-main">
+      <table class="list-table">
+        <thead>
+        <tr>
+          <th>用户</th>
+          <th>角色</th>
+          <th>邮箱</th>
+          <th>最后登录时间</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody *ngIf="pageList.length>0">
+        <tr *ngFor="let item of pageList;let i = index;">
+          <td [title]="item.name">{{item.name+' ('+item.account+')'}}</td>
+          <td [title]="item.role">{{item.role}}</td>
+          <td [title]="item.email">{{item.email}}</td>
+          <td [title]="item.login_at">{{item.login_at}}</td>
+          <td>
+            <i (click)="userEdit(item,i)"
+               class="fa fa-pencil-square-o bud-icon-button slds-m-right--small slds-col--bump-left" title="编辑"></i>
+            <i
+              (click)="userDelete(item,i)"
+              class="fa fa-trash-o bud-icon-button" title="删除"></i>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div *ngIf="pageList.length==0" class="list-empty">暂无数据</div>
+      <div class="paginatorDiv">
+        <p-paginator [style]="{'border-left': 0,'border-right': 0,'border-bottom': 0,'border-top': 0,'border-bottom-color': '#f0f0f0','background-color': '#fff' }"
+                     [rows]="pageRows" [totalRecords]="userList.length" (onPageChange)="changePages($event)">
+        </p-paginator>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 弹窗 -->
+<div class="bud-overlay" *ngIf="dialogVisible">
+  <div class="bud-operate-modal -small" style="width:600px;height: 400px">
+    <div class="header">
+      修改用户信息
+      <i class="fa fa-times" (click)="dialogHide()"></i>
+    </div>
+    <div class="body userListDialogBody">
+      <!--<div class="item">
+        <div class="keyName">用户名：</div>
+        <div class="keyValue">{{userInfo.name+' ('+userInfo.account+')'}}</div>
+      </div>-->
+      <div class="item">
+        <div class="keyName">邮箱：</div>
+        <div class="keyValue"><input class="bud-input" [(ngModel)]="userInfo.email"></div>
+      </div>
+      <div class="item">
+        <div class="keyName">系统角色：</div>
+        <div class="keyValue">
+          <p-dropdown [options]="userTypeList" [ngModel]="userInfo.role" [autoWidth]="false" (onChange)="onSelectedChange($event, true)" [style]="{width:'100%'}"></p-dropdown>
+        </div>
+      </div>
+      <div class="item">
+        <div class="keyName">状态：</div>
+        <div class="keyValue">
+          <p-radioButton  name="statusCheck" [value]="item.value" [label]="item.label" [(ngModel)]="userInfo.status" *ngFor=" let item of statusList"></p-radioButton>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <span class="requiredFiled" style="flex: 1;text-align: right;">{{updateErrorMsg}}</span>
+      <button class="bud-text-button slds-col--bump-left slds-m-right--small" (click)="dialogHide()">取消</button>
+      <button class="bud-button -origin" (click)="userUpdate()">保存</button>
+    </div>
+  </div>
+</div>

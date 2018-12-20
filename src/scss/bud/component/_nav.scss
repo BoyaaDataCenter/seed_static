@@ -1,0 +1,211 @@
+.#{ $prefix }nav {
+  user-select: none;
+  position: fixed;
+  z-index: 1000;
+  -webkit-transform: translateZ(0);
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 16%;
+  min-width: 140px;
+  background: #353b43;
+  >.top {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 14px;
+    background-color: #262a2f;
+    >.logo {
+      line-height: 0;
+      img {
+        margin-right: 10px;
+        height: 40px;
+        width: 40px;
+        // border-radius: 8px;
+        // border: 2px solid #353b43;
+      }
+    }
+    >.title {
+      font-size: 14px;
+      color: #fff;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    >.trigger {
+      position: absolute;
+      right: 10px;
+      top: 25px;
+      border-radius: 2px;
+      width: 16px;
+      height: 16px;
+      background-color: #353b43;
+      color: #a3b0bf;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      >.fa {
+        font-size: 12px;
+        transition: transform .3s;
+      }
+      &.-active {
+        >.fa{
+          transform: rotate(90deg)
+        }
+      }
+    }
+    .#{ $prefix }nav-game-list{
+      position: absolute;
+      top: 68px;
+      left: 0;
+      z-index: 22;
+    }
+  }
+  >.bottom {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    >.logo {
+      img {
+        width: 24px;
+        border-radius: 50%;
+        margin-left: 15px;
+      }
+      &:hover {
+        img {
+          opacity: .6;
+        }
+      }
+    }
+  }
+  >.drawer {
+    position: absolute;
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    cursor: pointer;
+    border-top: 1px solid #39445b;
+    &:hover {
+      background-color: #262a2f;
+    }
+    .fa-angle-double-right {
+      display: none;
+    }
+  }
+}
+
+
+.#{ $prefix }nav-menu {
+  position: relative;
+  background: #262a2f;
+  border-radius: 5px;
+  box-shadow: inset 0 0 1px #262a2f, 0 0 1px #262a2f;
+  padding: 9px 5px 9px 20px;
+  vertical-align: top;
+  text-align: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  color: #a3b0bf;
+  border: 0;
+  cursor: pointer;
+  transition: color .1s ease-in-out;
+  margin:0 10px 0 10px;
+  &:hover {
+    color: #fff;
+  }
+  >.content {
+    display: none;
+    position: absolute;
+    bottom: 34px;
+    left: 0;
+    right: 0;
+    background-color: #262a2f;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 1011;
+    border-radius: 5px;
+    &.-show {
+      display: block;
+      animation: mainSubMenuShow .2s ease-in-out;
+    }
+    >.inside {
+      >.link {
+        text-decoration: none;
+        text-align: left;
+        padding: 10px;
+        position: relative;
+        display: block;
+        cursor: pointer;
+        transition: color .1s ease-in-out;
+        color: #a3b0bf;
+        &:hover {
+          color: #FFF;
+        }
+        &:last-child {
+          border-bottom: 1px solid #39445b;
+        }
+        >.fa {
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+}
+
+.#{ $prefix }nav-game-list {
+  background-color: #262a2f;
+  width: 100%;
+  display: none;
+  >.item {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 8px 14px;
+    border-top: 1px solid #39445b;
+    color: #a3b0bf;
+    transition: color .3s;
+    &:last-child {
+      border-bottom: 1px solid #39445b;
+    }
+    &:hover,&.-active {
+      color: #fff;
+    }
+    >img {
+      margin-right: 10px;
+      height: 40px;
+      width: 40px;
+      // border-radius: 8px;
+      // border: 2px solid #353b43;
+    }
+  }
+  &.-active {
+    display: block;
+    animation: mainSubMenuShow .2s ease-in-out;
+  }
+}
+
+.#{ $prefix }nav-menu-wrap {
+  position: absolute;
+  top: 68px;
+  bottom: 80px;
+  right: 0;
+  left: 0;
+}
+
+@keyframes mainSubMenuShow {
+  0% {
+    margin-left: -10px;
+    opacity: 0;
+  }
+  100% {
+    margin-left: 0px;
+    opacity: 1;
+  }
+}

@@ -1,0 +1,82 @@
+<div [formGroup]="form">
+    <ng-container [ngSwitch]="data.controlType">
+
+      <ng-container *ngSwitchCase="'text'">
+        <label
+          class="bud-label"
+          [attr.for]="data.value">{{data.label}}</label>
+        <input class="bud-input"
+               [id]="data.key"
+               [type]="data.type"
+               [formControlName]="data.key">
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'dropdown'">
+        <label
+          class="bud-label"
+          [attr.for]="data.value">{{data.label}}</label>
+        <select class="bud-select"
+                [id]="data.key"
+                [formControlName]="data.key">
+          <option *ngFor="let option of data.options;" [value]="option.value">
+            {{option.label}}
+          </option>
+        </select>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'textarea'">
+        <label
+          class="bud-label"
+          [attr.for]="data.value">{{data.label}}</label>
+        <textarea *ngSwitchCase="'textarea'"
+                  [id]="data.key"
+                  [formControlName]="data.key"
+                  class="bud-input">
+        </textarea>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'radio'">
+        <label
+          class="bud-label">{{data.label}}</label>
+        <div class="grid-box">
+          <div
+            *ngFor="let option of data.options;let i = index;"
+            class="bud-control">
+            <input
+              class="bud-control__input"
+              type="radio"
+              [id]="data.key + i"
+              [value]="option.value"
+              [formControlName]="data.key">
+            <label
+              class="bud-control__label"
+              [attr.for]="data.key + i">{{option.label}}</label>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'checkbox'">
+        <label
+          class="bud-label">{{data.label}}</label>
+        <div class="grid-box">
+          <div
+            *ngFor="let control of form.controls[data.key].controls;let i = index;"
+            class="bud-control">
+            <input
+              class="bud-control__input"
+              type="checkbox"
+              [id]="data.key + i"
+              [formControl]="control">
+            <label
+              class="bud-control__label"
+              [attr.for]="data.key + i">{{data.options[i].label}}</label>
+          </div>
+        </div>
+      </ng-container>
+
+    </ng-container>
+    <div class="error" *ngIf="!isValid && !isPristine">
+      <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+      <span *ngIf="errors.required">{{requireMsg}}</span>
+    </div>
+</div>

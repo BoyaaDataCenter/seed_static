@@ -1,0 +1,96 @@
+<app-sys-header></app-sys-header>
+<div class="account-user-list-header">
+  <div>业务用户管理</div>
+  <div class="btns">
+    <button icon="fa fa-plus" label="添加业务用户" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left" (click)="addSysUser()"><span class="ui-button-icon-left ui-c fa fa-fw fa fa-plus"></span><span class="ui-button-text ui-c">添加业务用户</span></button>
+  </div>
+</div>
+<!--页面列表-->
+<div class="account-user-list-main">
+  <table class="list-table">
+    <thead>
+    <tr>
+      <!--<th style="width: 60px;">查看</th>-->
+      <th>用户</th>
+      <th>角色</th>
+      <th>邮箱</th>
+      <th>最后登录时间</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody *ngIf="pageList.length>0">
+    <tr *ngFor="let item of pageList;let i = index;">
+      <!--<td>
+        <i class="fa fa-external-link bud-icon-button" (click)="jumpToUserInfo(item)"  title="查看详情"></i>
+      </td>-->
+      <td [title]="item.name">{{item.name+' ('+item.account+')'}}</td>
+      <td>
+        <ng-container *ngIf="item.brole.length">
+          <span *ngFor="let roleItem of item.brole;">{{roleItem.role}}&nbsp;&nbsp;</span>
+        </ng-container>
+        <ng-container *ngIf="item.brole.length==0">
+          <span>无</span>
+        </ng-container>
+      </td>
+      <td [title]="item.email">{{item.email}}</td>
+      <td [title]="item.login_at">{{item.login_at}}</td>
+      <td>
+        <i
+          (click)="userEdit(item,i)"
+          class="fa fa-pencil-square-o bud-icon-button" title="编辑角色"></i>
+        <i
+          (click)="userDelete(item,i)"
+          class="fa fa-trash-o bud-icon-button" title="删除用户"></i>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div *ngIf="pageList.length==0" class="list-empty">暂无数据</div>
+  <p-paginator [style]="{'border-left': 0,'border-right': 0,'border-bottom': 0,'border-top': 0,'border-bottom-color': '#f0f0f0','background-color': '#fff' }"
+               [rows]="pageRows" [totalRecords]="userList.length" (onPageChange)="changePages($event)">
+  </p-paginator>
+</div>
+<!-- 弹窗 -->
+<div class="bud-overlay" *ngIf="dialogVisible">
+  <div class="bud-operate-modal -small" style="width:600px;height: 450px">
+    <div class="header">
+      添加业务用户
+      <i class="fa fa-times" (click)="dialogHide()"></i>
+    </div>
+    <div class="body userListDialogBody">
+      <div class="item">
+        <div>用户列表：</div>
+        <div>
+          <p-multiSelect [options]="sysUserList" [(ngModel)]="newUserListId" defaultLabel="请选择" [style]="{'width':'100%','line-height':'26px','font-size':'14px','padding-left':'4px'}"  [selectedItemsLabel]="'已选{0}位用户'"
+                                             [maxSelectedLabels]="6"></p-multiSelect>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <button class="bud-text-button slds-col--bump-left slds-m-right--small" (click)="dialogHide()">取消</button>
+      <button class="bud-button -origin" (click)="userListUpdate()">保存</button>
+    </div>
+  </div>
+</div>
+<div class="bud-overlay" *ngIf="roleDialogVisible">
+  <div class="bud-operate-modal -small" style="width:600px;height: 450px">
+    <div class="header">
+      编辑用户角色
+      <i class="fa fa-times" (click)="dialogHide()"></i>
+    </div>
+    <div class="body userRoleDialogBody">
+      <div class="item">
+        <div>用户角色：</div>
+        <div>
+          <p-multiSelect [options]="roleList" [(ngModel)]="roleIdList" defaultLabel="请选择" [style]="{width:'100%'}" [selectedItemsLabel]="'已选{0}种角色'"
+                         [maxSelectedLabels]="5"></p-multiSelect>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <button class="bud-text-button slds-col--bump-left slds-m-right--small" (click)="dialogHide()">取消</button>
+      <button class="bud-button -origin" (click)="userRoleUpdate()">保存</button>
+    </div>
+  </div>
+</div>
+

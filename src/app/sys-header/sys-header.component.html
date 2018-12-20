@@ -1,0 +1,12 @@
+<div id="sysHeader">
+  <i class="fa fa-users" title="查看系统用户" (click)="checkSysUser()" *ngIf="isSuperAdmin"></i>
+  <div class="userOper">
+    <img alt="用户头像" class="userAvatar" #avatarImg>
+    <span>{{userInfo.name}}</span>
+    <div class="opers">
+      <p (click)="checkUserInfo()"><i class="fa fa-user"></i>个人信息</p>
+      <p (click)="signOut()"><i class="fa fa-sign-out"></i>退出登录</p>
+    </div>
+  </div>
+
+</div>

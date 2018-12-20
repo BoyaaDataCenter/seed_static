@@ -1,0 +1,74 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "project": {
+    "name": "seed_static",
+    "ejected": true
+  },
+  "apps": [
+    {
+      "root": "src",
+      "outDir": "dist",
+      "assets": [
+        "assets",
+        "favicon.ico",
+        "compConfig"
+      ],
+      "index": "index.html",
+      "main": "main.ts",
+      "polyfills": "polyfills.ts",
+      "test": "test.ts",
+      "tsconfig": "tsconfig.app.json",
+      "testTsconfig": "tsconfig.spec.json",
+      "prefix": "app",
+      "styles": [
+        "../node_modules/normalize.css/normalize.css",
+        "../node_modules/izitoast/dist/css/iziToast.css",
+        "scss/iziToast.scss",
+        "scss/primeng.scss",
+        "../node_modules/font-awesome/css/font-awesome.css",
+        "../node_modules/flatpickr/dist/flatpickr.css",
+        "scss/nprogress.scss",
+        "scss/theme/index.scss",
+        "scss/slds/utilities/index-with-dependencies.scss",
+        "scss/styles.scss"
+      ],
+      "scripts": [
+        "../src/assets/js/jquery.min.js",
+        "../node_modules/sortablejs/Sortable.js"
+      ],
+      "environmentSource": "environments/environment.ts",
+      "environments": {
+        "source": "environments/environment.ts",
+        "prod": "environments/environment.prod.ts",
+        "test": "environments/environment.test.ts",
+        "dev": "environments/environment.dev.ts"
+      }
+    }
+  ],
+  "e2e": {
+    "protractor": {
+      "config": "./protractor.conf.js"
+    }
+  },
+  "lint": [
+    {
+      "project": "src/tsconfig.app.json"
+    },
+    {
+      "project": "src/tsconfig.spec.json"
+    },
+    {
+      "project": "e2e/tsconfig.e2e.json"
+    }
+  ],
+  "test": {
+    "karma": {
+      "config": "./karma.conf.js"
+    }
+  },
+  "defaults": {
+    "styleExt": "scss",
+    "component": {
+    }
+  }
+}

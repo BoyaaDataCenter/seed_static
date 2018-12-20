@@ -1,0 +1,200 @@
+.flatpickr {
+  border-right: 1px solid #ddd;
+  padding: 0 10px;
+  height: 39px;
+  display: flex;
+  align-items: center;
+  &:hover, &.-active {
+    background-color: #fff3ec;
+    cursor: pointer;
+    >.input {
+      >input {
+        background-color: #fff3ec;
+        cursor: pointer;
+      }
+    }
+  }
+  >.fa {
+    color: #DC4C00;
+  }
+  > .input {
+    position: relative;
+    margin-left: 10px;
+    >input {
+      background-color: #fbfbfb;
+      border: 0;
+    }
+  }
+  
+  /deep/ .flatpickr {
+    border: 0;
+    font-size: 12px;
+  }
+  /deep/ .flatpickr-calendar {
+    font-size: 14px !important;
+    display: none;
+    &.inline {
+      position: absolute !important;
+      top: 30px;
+      left: -32px;
+    }
+  }
+  
+  &.-range {
+    /deep/ .flatpickr-calendar {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+  
+  &.-active {
+    >.input {
+      /deep/ .flatpickr-calendar, .shortcut{
+        display: block;
+      }
+    }
+  }
+  &.-border {
+    height: 30px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    >.input {
+      >input {
+        background-color: #fff;
+      }
+    }
+    &:hover {
+      >.input {
+        >input {
+          background-color: #fff3ec;
+        }
+      }
+    }
+  }
+}
+
+.shortcut {
+  display: none;
+  position: absolute;
+  left: 283px;
+  width: 220px;
+  height: 301px;
+  top: 30px;
+  background-color: #fff;
+  z-index: 99999;
+  border-radius: 5px;
+  box-shadow: 0px 1px 0 #e6e6e6, 1px 0px 0 #e6e6e6, 0px -1px 0 #e6e6e6, 1px 0px 0 #e6e6e6, 6px 1px 13px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  >.header {
+    margin-top: 12px;
+    padding: 5px;
+    >.date-ensure {
+      text-align: center;
+      line-height: 30px;
+      background-color: #569ff7;
+      color: #fff;
+      border-radius: 3px;
+      opacity: .6;
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.date-box {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  >.separate {
+    margin: 0 5px;
+    color: #b7bbbf;
+  }
+  >.label {
+    width: 120px;
+  }
+  >.bud-input {
+    margin-bottom: 0;
+  }
+}
+
+.item-list {
+  padding: 0 5px;
+  >.item {
+    margin: 5px 0;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    padding-left: 20px;
+    line-height: 30px;
+    border-radius: 3px;
+    background-color: #f7f7f7;
+    &.-active {
+      background: #569ff7;
+      color: #fff;
+      border-color: #569ff7;
+    }
+    &:hover:not(.-active) {
+      border-color: #959ea9;
+      background: #959ea9;
+      color: #fff;
+    }
+  }
+}
+
+.set-btn{
+  margin-left: 10px;
+  font-size: 20px;
+  color: #0a0a0a;
+  cursor: pointer;
+}
+
+.multiDialogBody,.singleDialogBody{
+  font-size: 16px;
+  
+  .item{
+    padding: 10px 0;
+    width: 100%;
+    .bud-input{
+      margin: 0;
+      width: 100%;
+    }
+    div{
+      padding: 3px 0;
+    }
+    
+    p{
+      margin: 5px 30px;
+      
+      input{
+        border: 0;
+        border-bottom: 1px solid #d9d9d9;
+        width: 50%;
+      }
+    }
+  }
+  
+  /deep/ {
+    .ui-radiobutton-icon {
+      display: block!important;
+      font-size: .6em;
+      line-height: inherit!important;
+    }
+    
+    .ui-radiobutton-label{
+      padding-right: 20px;
+    }
+  }
+}
+.singleDialogBody{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+
+

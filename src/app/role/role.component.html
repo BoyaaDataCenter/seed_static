@@ -1,0 +1,59 @@
+<app-sys-header></app-sys-header>
+<div class="role-list-header">
+  <div>角色管理</div>
+  <div class="bar-button">
+    <button icon="fa fa-plus" label="新增角色" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left" (click)="operRole(1)"><span class="ui-button-icon-left ui-c fa fa-fw fa fa-plus"></span><span class="ui-button-text ui-c">新增角色</span></button>
+  </div>
+</div>
+<!--页面列表-->
+<div class="role-list-main">
+  <table class="list-table">
+    <thead>
+    <tr>
+      <th style="width: 60px;">查看</th>
+      <th>角色</th>
+      <th style="width: 80px">操作</th>
+    </tr>
+    </thead>
+    <tbody *ngIf="pageList.length>0">
+    <tr *ngFor="let item of pageList;let i = index;">
+      <td>
+        <i class="fa fa-external-link bud-icon-button" (click)="jumpToUserMenu(item)"  title="查看菜单权限"></i>
+      </td>
+      <td [title]="item.role">{{item.role}}</td>
+      <td>
+        <i (click)="roleEdit(item,i)"
+           class="fa fa-pencil-square-o bud-icon-button slds-m-right--small slds-col--bump-left" title="编辑"></i>
+        <i
+          (click)="roleDelete(item,i)"
+          class="fa fa-trash-o bud-icon-button" title="删除"></i>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div *ngIf="pageList.length==0" class="list-empty">暂无数据</div>
+  <p-paginator [style]="{'border-left': 0,'border-right': 0,'border-bottom': 0,'border-top': 0,'border-bottom-color': '#f0f0f0','background-color': '#fff' }"
+               [rows]="pageRows" [totalRecords]="roleList.length" (onPageChange)="changePages($event)">
+  </p-paginator>
+</div>
+<!-- 弹窗 -->
+<div class="bud-overlay" *ngIf="dialogVisible">
+  <div class="bud-operate-modal -small" style="width:500px;height: 250px">
+    <div class="header">
+      {{editType==1?'新增角色':'编辑角色'}}
+      <i class="fa fa-times" (click)="dialogHide()"></i>
+    </div>
+    <div class="body roleListDialogBody">
+      <div class="item">
+        <div>角色名：</div>
+        <div>
+          <input class="bud-input" [(ngModel)]="roleInfo.role">
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <button class="bud-text-button slds-col--bump-left slds-m-right--small" (click)="dialogHide()">取消</button>
+      <button class="bud-button -origin" (click)="roleUpdate()">保存</button>
+    </div>
+  </div>
+</div>

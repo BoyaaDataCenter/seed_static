@@ -1,0 +1,116 @@
+.#{ $prefix }modal {
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: rgba(0,0,0,.3) 0 1px 3px 0;
+  width: 900px;
+  position: relative;
+  left: 50%;
+  margin-left: -450px;
+  top: 10%;
+  >.header {
+    height: 50px;
+    background: #FFF;
+    border-bottom: 1px solid #DDD;
+    font-size: 14px;
+    color: #666;
+    position: relative;
+    >.close {
+      cursor: pointer;
+      position: absolute;
+      right: 0;
+      top: 0;
+      background: #EEE;
+      border: 1px solid #DDD;
+      border-top: 0;
+      width: 50px;
+      text-align: center;
+      vertical-align: middle;
+      height: 50px;
+      line-height: 50px;
+      font-size: 22px;
+      color: #df4f18;
+      &:hover {
+        color: #353b43;
+      }
+    }
+  }
+  >.sub-header {
+    height: 35px;
+    border-bottom: 1px solid #DDD;
+    color: #222;
+    background-color: #fbfbfb;
+    .app-flatpickr {
+      height: 34px;
+    }
+  }
+  >.body {
+    padding-bottom: 2px;
+    position: relative;
+  }
+}
+
+.#{ $prefix }operate-modal {
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: rgba(0,0,0,.3) 0 1px 3px 0;
+  width: 900px;
+  height: 600px;
+  position: relative;
+  left: 50%;
+  margin-left: -450px;
+  top: 10%;
+  display: flex;
+  flex-direction: column;
+  >.header {
+    position: relative;
+    // background-color: #39445d;
+    background-color: #353b43;
+    color: #FFF;
+    text-align: center;
+    font-size: 18px;
+    padding: 10px;
+    >.fa-times {
+      cursor: pointer;
+      right: 12px;
+      position: absolute;
+    }
+  }
+  >.body {
+    padding: 12px;
+    position: relative;
+    overflow-y: auto;
+    flex-grow: 1;
+  }
+  >.footer {
+    width: 100%;
+    border-top: 1px solid #DDD;
+    background-color: #fbfbfb;
+    color: #222;
+    padding: 10px;
+    height: 60px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  &.-small {
+    width: 600px;
+    margin-left: -300px;
+  }
+
+  .ui-datatable-scrollable-body {
+    overflow-y: scroll;
+  }
+}
+
+.#{ $prefix }overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  overflow: auto;
+  background: rgba(0, 0, 0,.4);
+}

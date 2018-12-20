@@ -1,0 +1,48 @@
+<div id="register">
+  <div class="register_box">
+    <ng-container  *ngIf="showType==1">
+      <div class="face">
+        <em>
+          <img width="90" src="./../../assets/images/userFace.png" alt="">
+        </em>
+        <p>注册账号</p>
+      </div>
+      <ul>
+        <li>
+          <input type="text" class="txt" placeholder="账号名" [(ngModel)]="account" (click)="inputStart()">
+        </li>
+        <li>
+          <input type="password" class="txt" placeholder="密码" [(ngModel)]="password" (click)="inputStart()">
+        </li>
+        <li>
+          <input type="password" class="txt" placeholder="确认密码" [(ngModel)]="confirm_password" (click)="inputStart()">
+        </li>
+        <li>
+          <input class="txt" placeholder="姓名" [(ngModel)]="name" (click)="inputStart()">
+        </li>
+        <li>
+          <input class="txt" placeholder="邮箱" [(ngModel)]="email" (click)="inputStart()">
+        </li>
+        <p class="erro_tips">{{errorMsg}}</p>
+        <li>
+          <span class="btn" (click)="userRegister()">注册</span>
+        </li>
+        <p class="register">
+          <span (click)="goToLogin()">返回登录&nbsp;&nbsp;></span>
+        </p>
+      </ul>
+    </ng-container>
+    <ng-container *ngIf="showType==2">
+      <div class="face">
+        <em>
+          <img width="90" src="./../../assets/images/logo1.png" alt="">
+        </em>
+      </div>
+      <div class="result">
+        <p>注册成功，可以使用注册的账号密码登录了~</p>
+        <span class="btn" (click)="goToLogin()">返回登录</span>
+      </div>
+    </ng-container>
+
+  </div>
+</div>

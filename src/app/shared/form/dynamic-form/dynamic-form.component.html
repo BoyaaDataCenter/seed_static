@@ -1,0 +1,13 @@
+<div>
+  <form [formGroup]="form" novalidate>
+    <div *ngFor="let item of data">
+      <app-dynamic-form-item [data]="item" [form]="form"></app-dynamic-form-item>
+    </div>
+  </form>
+  <div class="slds-grid">
+    <button
+      [disabled]="form.invalid"
+      class="bud-button -origin slds-col--bump-left"
+      (click)="ensure()">确定</button>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+<div id="userInfo">
+  <div class="header">
+    <app-global-header></app-global-header>
+  </div>
+  <div class="main">
+    <div class="account-user-header">
+      用户信息
+    </div>
+    <div class="account-user-main">
+      <div class="opersBtn">
+        <div class="editBtn" (click)="editUserInfo()" *ngIf="!isEditing">修改信息</div>
+        <div class="saveBtn" (click)="saveUserInfo()" *ngIf="isEditing">保存修改</div>
+      </div>
+      <div class="panel-body">
+        <a class="avatar">
+          <img alt="头像" #avatarImg>
+          <div class="upDateBtn">
+            上传头像
+            <form id="uploadFrom" method="post" enctype="multipart/form-data">
+              <input type="file" id="uploadImage" accept="image/png,image/jpg,image/jpeg" name="avatar" (click)="uploadImg($event)">
+            </form>
+          </div>
+        </a>
+        <div class="user-msg">
+          <div class="account-msg">
+            <p *ngIf="!isEditing"><span>姓名：</span>{{userInfo.name || '未知'}}</p>
+            <p *ngIf="isEditing"><span>姓名：</span><input  class="bud-input" [(ngModel)]="userInfo.name"></p>
+            <p *ngIf="!isEditing"><span>邮箱：</span>{{userInfo.email || '未知'}}</p>
+            <p *ngIf="isEditing"><span>邮箱：</span><input  class="bud-input" [(ngModel)]="userInfo.email"></p>
+            <p *ngIf="!isEditing"><span>性别：</span>{{sexList[userInfo.sex] || '未知'}}</p>
+            <p *ngIf="isEditing"><span>性别：</span>
+              <p-dropdown [options]="sexSelectList" [(ngModel)]="userInfo.sex" [placeholder]="'请选择'" [style]="{'width': '80px'}"></p-dropdown>
+            </p>
+            <p><span>账号名：</span>{{userInfo.account || '未知'}}</p>
+            <p><span>用户类型：</span>{{roleType[userInfo.role] || '未知'}}</p>
+            <p><span>注册时间：</span>{{userInfo.created || '未知'}}</p>
+            <p><span>最后登录时间：</span>{{userInfo.login_at || '未知'}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

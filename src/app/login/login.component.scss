@@ -1,0 +1,470 @@
+#loginPage{
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+
+  #login {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+
+    .sysName{
+      font-size: 22px;
+      margin-left: 200px;
+      font-weight: bold;
+      display: inline-flex;
+      margin-bottom: 40px;
+
+      .desc{
+        font-family: cursive;
+        color: #30bc73;
+        margin-left: 20px;
+        font-size: 18px;
+      }
+    }
+
+    .container {
+      width: 1240px;
+      margin: 0 auto;
+      position: relative;
+      height: 550px;
+    }
+
+    .cloud1, .cloud2, .cloud3, .airplane1, .airplane2, .niao, .btn_bottom {
+      background: url("./../../assets/images/cloudPlane.png") no-repeat 0 0;
+      position: absolute;
+      display: block;
+      z-index: 100;
+    }
+
+    .mans {
+      z-index: 101;
+      background: url("./../../assets/images/mans.png") no-repeat 0 0;
+      position: absolute;
+      left: 135px;
+      top: 66px;
+      width: 354px;
+      height: 337px;
+    }
+
+    .cloud1 {
+      width: 71px;
+      height: 37px;
+      left: 197px;
+      top: 158px;
+    }
+
+    .niao {
+      width: 44px;
+      height: 29px;
+      background-position: -51px -70px;
+      left: 77px;
+      top: 183px;
+    }
+
+    .cloud2 {
+      width: 51px;
+      height: 28px;
+      left: 564px;
+      top: 195px;
+      background-position: 0 -37px;
+    }
+
+    .cloud3 {
+      width: 51px;
+      height: 28px;
+      left: 108px;
+      top: 287px;
+      background-position: 0 -37px;
+    }
+
+    .airplane1 {
+      width: 62px;
+      height: 46px;
+      left: 557px;
+      top: 95px;
+      background-position: -71px 0px;
+    }
+
+    .airplane2 {
+      width: 34px;
+      height: 24px;
+      left: 529px;
+      top: 167px;
+      background-position: -51px -46px;
+    }
+
+    .wenzi {
+      position: absolute;
+      left: 205px;
+      top: 404px;
+      width: 281px;
+      height: 79px;
+      font-size: 40px;
+      line-height: 79px;
+      color: #30bc73;
+      text-align: center;
+
+      &:hover {
+        transform: rotate(2deg);
+      }
+    }
+
+    .ico_t {
+      width: 700px;
+      height: 560px;
+      position:relative;
+    }
+
+    .login_box {
+      box-shadow: 0px 5px 12px #e7e8ed;
+      font-size: 14px;
+      width: 421px;
+      background: #fff;
+      border: 1px solid #e0e5f3;
+      position: absolute;
+      top: 35px;;
+      right: 20px;
+      overflow: hidden;
+
+      .face {
+        width: 90px;
+        height: 90px;
+        margin: 40px auto 20px;
+        position: relative;
+
+        em{
+          display: block;
+          width: 90px;
+          height: 90px;
+          overflow: hidden;
+        }
+      }
+
+      >ul {
+        padding: 30px;
+
+        li {
+          position: relative;
+          margin-bottom: 20px;
+          list-style:none;
+
+          &:last-child {
+            margin-top: 20px;
+          }
+        }
+      }
+
+      .user, .pass{
+        padding-top: 1px;
+      }
+
+      .txt {
+        padding-left: 40px;
+        width: 100%;
+        height: 56px;
+        line-height: 56px;
+        border: 1px solid #e0e5f3;
+        border-radius: 4px;
+        font-size: 14px;
+        color: rgb(40, 45, 55);
+
+        &:focus{
+          outline: none;
+          border-color: #30bc73;
+          box-shadow: 0 0 6px #4ebc7b;
+        }
+      }
+
+
+      .erro_tips {
+        color: #e75f3c;
+        margin: 0 0 10px 0;
+        font-size: 16px;
+      }
+
+      .user i,.pass i{
+        width: 16px;
+        height: 16px;
+        background: url("./../../assets/images/loginIcon.png") no-repeat 0 0;
+        background-size: 100% 200%;
+        display: block;
+        position: absolute;
+        top: 21px;
+        left: 17px;
+      }
+
+      .user i.on {
+        background-position: -1px 0px;
+      }
+
+      .pass i.on {
+        background-position: -1px -16px;
+      }
+
+      .pass .tips {
+        font-size: 14px;
+        color: #e0e5f3;
+        position: absolute;
+        left: 40px;
+        line-height: 56px;
+        height: 56px;
+      }
+
+      .btn {
+        display: block;
+        width: 360px;
+        height: 54px;
+        //background: url("./../../assets/images/ico_login.png") 0 -112px no-repeat;
+        font-size: 20px;
+        text-align: center;
+        line-height: 54px;
+        color: #fff;
+        background-color: #30bc73;
+        border-radius: 4px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #44cf86;
+        }
+      }
+
+      .opers{
+        text-align: right;
+        color: #555;
+        cursor: pointer;
+        margin-bottom: 0;
+        display: flex;
+        justify-content: space-between;
+        height: 20px;
+
+        span:hover{
+          color:  #1b1d1f;
+          border-bottom: 1px solid #1b1d1f;
+          padding-bottom: 4px;
+        }
+      }
+    }
+  }
+
+  /*右上动画*/
+  @-webkit-keyframes to-tr {
+    from {
+      opacity: 0;
+      -webkit-transform: translate(-80px, 80px);
+    }
+    to {
+      opacity: 1;
+      -webkit-transform: translate(0, 0);
+    }
+  }
+
+  @keyframes to-tr {
+    from {
+      opacity: 0;
+      transform: translate(-80px, 80px);
+    }
+    to {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+  }
+
+  .to-tr {
+    -webkit-animation: to-tr 2s ease;
+    -moz-animation: to-tr 2s ease;
+    -o-animation: to-tr 2s ease;
+    animation: to-tr 2s ease;
+    -webkit-animation-fill-mode: backwards;
+    -moz-animation-fill-mode: backwards;
+    -o-animation-fill-mode: backwards;
+    animation-fill-mode: backwards
+  }
+
+  @-webkit-keyframes to-le {
+    from {
+      opacity: 0;
+      -webkit-transform: translate(-80px, -80px);
+    }
+    to {
+      opacity: 1;
+      -webkit-transform: translate(0, 0);
+    }
+  }
+
+  @keyframes to-le {
+    from {
+      opacity: 0;
+      transform: translate(-80px, -80px);
+    }
+    to {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+  }
+
+  .to-le {
+    -webkit-animation: to-le 4s ease;
+    -moz-animation: to-le 4s ease;
+    -o-animation: to-le 4s ease;
+    animation: to-le 4s ease;
+    -webkit-animation-fill-mode: backwards;
+    -moz-animation-fill-mode: backwards;
+    -o-animation-fill-mode: backwards;
+    animation-fill-mode: backwards
+  }
+
+  /*向右来回重复动画*/
+  @-webkit-keyframes moveRight {
+    0% {
+      -webkit-transform: translateX(0);
+    }
+    50% {
+      -webkit-transform: translateX(200px);
+    }
+    100% {
+      -webkit-transform: translateX(0);
+    }
+  }
+
+  @keyframes moveRight {
+    0% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(200px);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  .moveRight {
+    -webkit-animation: moveRight 20s infinite linear;
+    -moz-animation: moveRight 20s infinite linear;
+    -o-animation: moveRight 20s infinite linear;
+    animation: moveRight 20s infinite linear;
+    -webkit-animation-fill-mode: backwards;
+    -moz-animation-fill-mode: backwards;
+    -o-animation-fill-mode: backwards;
+    animation-fill-mode: backwards
+  }
+
+  /*向左来回重复动画*/
+  @-webkit-keyframes moveLeft {
+    0% {
+      -webkit-transform: translateX(0);
+    }
+    50% {
+      -webkit-transform: translateX(-200px);
+    }
+    100% {
+      -webkit-transform: translateX(0);
+    }
+  }
+
+  @keyframes moveLeft {
+    0% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(-200px);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  .moveLeft {
+    -webkit-animation: moveLeft 20s infinite linear;
+    -moz-animation: moveLeft 20s infinite linear;
+    -o-animation: moveLeft 20s infinite linear;
+    animation: moveLeft 20s infinite linear;
+    -webkit-animation-fill-mode: backwards;
+    -moz-animation-fill-mode: backwards;
+    -o-animation-fill-mode: backwards;
+    animation-fill-mode: backwards
+  }
+
+  /*向左动画*/
+  @-webkit-keyframes toleft {
+    from {
+      opacity: 0;
+      -webkit-transform: translateX(40px);
+    }
+    to {
+      opacity: 1;
+      -webkit-transform: translateX(0);
+    }
+  }
+
+  @keyframes toleft {
+    from {
+      opacity: 0;
+      transform: translateX(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .toleft {
+    -webkit-animation: toleft 2s ease;
+    -moz-animation: toleft 2s ease;
+    -o-animation: toleft 2s ease;
+    animation: toleft 2s ease 1s;
+    -webkit-animation-fill-mode: backwards;
+    -moz-animation-fill-mode: backwards;
+    -o-animation-fill-mode: backwards;
+    animation-fill-mode: backwards
+  }
+
+  @-webkit-keyframes toright {
+    from {
+      opacity: 0;
+      -webkit-transform: translateX(-40px);
+    }
+    to {
+      opacity: 1;
+      -webkit-transform: translateX(0);
+    }
+  }
+
+  @keyframes toright {
+    from {
+      opacity: 0;
+      transform: translateX(-40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .toright {
+    -webkit-animation: toright 2s ease;
+    -moz-animation: toright 2s ease;
+    -o-animation: toright 2s ease;
+    animation: toright 2s ease 1s;
+    -webkit-animation-fill-mode: backwards;
+    -moz-animation-fill-mode: backwards;
+    -o-animation-fill-mode: backwards;
+    animation-fill-mode: backwards
+  }
+
+  .trans {
+    -webkit-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+  }
+
+  .time0-5 {
+    animation-delay: .5s;
+  }
+
+  .time1 {
+    animation-delay: 1s;
+  }
+
+}

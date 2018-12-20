@@ -1,0 +1,36 @@
+<div class="debugger-user-list-header">
+  <div>模拟用户列表</div>
+  <div>
+    <button label="返回首页" type="button" class="bud-button -origin -small" (click)="jumpToIndex()">返回首页</button>
+    <button label="清除模拟用户" type="button" class="bud-button -origin -small" (click)="clearSimulationUser()">清除模拟用户</button>
+  </div>
+</div>
+<!--页面列表-->
+<div class="debugger-user-list-main">
+  <table class="list-table">
+    <thead>
+    <tr>
+      <th style="width: 70px;">操作</th>
+      <th>用户</th>
+      <th>角色</th>
+      <th>邮箱</th>
+      <th>最后登录时间</th>
+    </tr>
+    </thead>
+    <tbody *ngIf="pageList.length>0">
+    <tr *ngFor="let item of pageList;let i = index;">
+      <td>
+        <i class="fa fa-external-link bud-icon-button" (click)="simulateUser(item)"  title="模拟此用户"></i>
+      </td>
+      <td [title]="item.name">{{item.name+' ('+item.account+')'}}</td>
+      <td [title]="item.role">{{item.role}}</td>
+      <td [title]="item.email">{{item.email}}</td>
+      <td [title]="item.login_at">{{item.login_at}}</td>
+    </tr>
+    </tbody>
+  </table>
+  <div *ngIf="pageList.length==0" class="list-empty">暂无数据</div>
+  <p-paginator [style]="{'border-left': 0,'border-right': 0,'border-bottom': 0,'border-top': 0,'border-bottom-color': '#f0f0f0','background-color': '#fff' }"
+               [rows]="pageRows" [totalRecords]="userList.length" (onPageChange)="changePages($event)">
+  </p-paginator>
+</div>

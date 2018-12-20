@@ -1,0 +1,40 @@
+.dim-ratio {
+  transform: scale(0.9);
+  font-size: 12px;
+  position: relative;
+  top: 2px;
+}
+
+.text--increase {
+  color: #C23934;
+}
+.text--reduce {
+  color: #1CA041;
+}
+
+.table-td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  line-height: 25px;
+  max-height: 25px;
+}
+
+:host /deep/ .ui-column-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-height: 14px;
+  max-height: 28px;
+}
+
+.dimSelect{
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  color: #353b43;
+}

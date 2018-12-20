@@ -1,0 +1,201 @@
+<!--表格-->
+<div class="bud-panel reoprt-element-panel" [ngClass]="'reoprt-element-panel_'+cid">
+  <!-- 报表头部信息 -->
+  <div class="header handleHeader">
+    <span>
+      {{reportInfo.name}}
+    </span>
+    <app-help-info [dimHelp]="reportInfo.desc" *ngIf="reportInfo.desc.length>0"></app-help-info>
+    <div class="slds-m-left--small">
+      <app-report-query
+        [headerCompList]="reportInfo.filters"
+        [isGlobal]="false"
+        [isCanSet]="isCanSet"
+        [showAddBtn]="isShowAddBtn"
+        [panelQueryParam]="panelQueryParam"
+        [pCid] = "cid"
+        (deleteComp)="onDeleteComp($event)"
+        (configChange)="onConfigChange($event)"
+        (selectedChange)="onSelectedChange($event)"
+      ></app-report-query>
+    </div>
+    <div class="slds-col--bump-left">
+      <i class="fa slds-m-right--x-small bud-icon-button _bud-size-large"
+         [ngClass]="{'fa-pie-chart': reportInfo.charttype=='pie', 'fa-bar-chart': reportInfo.charttype=='bar_cross',
+         'fa-line-chart':reportInfo.charttype=='line' || reportInfo.charttype=='linestack'  || reportInfo.charttype=='chart'}"
+         style="margin-left:10px;"
+         [class.-active]="showChart"
+         title="切换为图"  (click)="toggle(reportInfo.charttype);" *ngIf="chartChangeList.length==0"></i>
+      <i class="fa slds-m-right--x-small bud-icon-button _bud-size-large"
+         [ngClass]="{'fa-pie-chart': chartTypeConfig.base=='pie', 'fa-bar-chart': chartTypeConfig.base=='bar', 'fa-line-chart':chartTypeConfig.base=='line'}"
+         style="margin-left:10px;"
+         [class.-active]="showChart"
+         title="切换图标类型"  (click)="showChart ? showMenuToggle() : toggle(chartTypeConfig.base != 'line' ? chartTypeConfig.base : (reportInfo.charttype == 'linestack' ? 'linestack' : 'line'));" *ngIf="chartChangeList.length>0" style="position: relative">
+        <div class="slideMenu" *ngIf="showMenu">
+          <ul>
+            <li (click)="changeChartType(item[0])" *ngFor="let item of chartChangeList">
+              <i class="fa slds-m-right--x-small bud-icon-button _bud-size-large"
+                 [ngClass]="{'fa-pie-chart': 'pie'==item[0], 'fa-bar-chart': 'bar'==item[0], 'fa-line-chart':'line'==item[0] || 'linestack'==item[0]}"
+                 [class.-active]="curChartType==item[0]"></i><span>{{item[1]}}</span>
+            </li>
+          </ul>
+        </div>
+      </i>
+      <i class="fa fa-table bud-icon-button _bud-size-large"
+         [class.-active]="!showChart"
+         (click)="toggle('table')" title="切换为表"></i>
+      <span class="set-btn fa fa-cog" title="配置" (click)="setDefault($event)" *ngIf="isCanSet"></span>
+      <span class="delete-btn fa fa-trash" title="删除" (click)="deleteComponent($event)" *ngIf="isCanSet"></span>
+    </div>
+  </div>
+  <!-- 报表头部信息 -->
+  <!-- 报表内容 -->
+  <div class="body">
+    <app-loading [loading]="loading" [msg]="errMsg"></app-loading>
+    <div *ngIf="showChart && noChange">
+      <app-echarts
+        [option]="chartOption"
+        [height]="rh / 100 * bodySize.height + 'px'"
+        [dimList]="dimensionsList"
+        [indexsList]="indexsList"
+        [limitNum]="limitNum"
+        [dimSelected]="dimSelected"
+        [indexsSelected]="indexsSelected"
+        (selectChange)="echartSelectChange($event)"
+      ></app-echarts>
+    </div>
+    <app-data-table
+      *ngIf="!showChart"
+      [groupField]="tableGroupField"
+      [oneScreenShow]="tableOneScreenShow"
+      [paginator]="tablePaginator"
+      [rows]="tableRows"
+      [dimsList]="tableDimsList"
+      [limitNum]="limitNum"
+      [exportFilename]="reportInfo.name"
+      [trendConfig]="trendConfig"
+      [columns]="tableColumns"
+      [data]="tableData"
+      [dimList]="dimensionsList"
+      [dimSelected]="dimSelected"
+      (selectChange)="echartSelectChange($event)"
+      (tableDimChange)="tableDimChange($event)">
+    </app-data-table>
+    <div *ngIf="showConfigTip" class="configTips">
+      <img src="../../assets/images/arrow.png">
+    </div>
+  </div>
+  <span class="resizableHandle" (mousedown)="resizable($event)" *ngIf="isCanSet"></span>
+  <!-- 报表内容 -->
+</div>
+<!-- 弹窗 -->
+<div class="bud-overlay" *ngIf="dialogVisible">
+  <div class="bud-operate-modal -small" style="width:850px;height: 800px">
+    <div class="header">
+      报表配置
+      <i class="fa fa-times" (click)="dialogHide()"></i>
+    </div>
+    <div class="body reportDialogBody">
+      <div class="item">
+        <div>报表名称</div>
+        <div>
+          <input class="bud-input" [(ngModel)]="reportInfoTemp.name">
+        </div>
+      </div>
+      <div class="item">
+        <div>报表描述</div>
+        <div>
+          <textarea class="bud-input" [(ngModel)]="reportInfoTemp.desc"></textarea>
+        </div>
+      </div>
+      <div class="item">
+        <div>数据源</div>
+        <div>
+          <p-dropdown [options]="dbList" [ngModel]="reportInfoTemp.db_source" [autoWidth]="false" (onChange)="onDbChange($event, true)" [style]="{width:'100%'}" [placeholder]="'请选择'" [scrollHeight]="'150px'"></p-dropdown>
+        </div>
+      </div>
+      <div class="item">
+        <div>SQL配置</div>
+        <div>
+          <textarea class="bud-input sqlConfig" [(ngModel)]="reportInfoTemp.sql"></textarea>
+        </div>
+        <div>
+          <span *ngFor="let item of queryList" class="queryItem" (click)="clickQueryItem(item[0], item[2])" title="点击插入SQL">{{item[1]}}</span>
+        </div>
+        <div style="text-align: right;">
+          <div class="getSqlDim" (click)="getSqlDim()">生成指标和纬度</div>
+        </div>
+      </div>
+      <div class="item">
+        <div>指标和纬度</div>
+        <div *ngIf="tips.length>0">
+          <p class="tipText">{{tips}}</p>
+        </div>
+        <ng-container *ngIf="curChartType!='line'">
+          <div class="dimList">
+            <div style="width: 20%">字段名</div>
+            <div style="width: 20%">中文名</div>
+            <div style="width: 15%">指标或维度</div>
+            <div style="width: 15%">百分比显示</div>
+            <div style="width: 15%">排序</div>
+            <div style="width: 15%">默认展示</div>
+          </div>
+          <div *ngFor="let item of dimList; let i of index" class="dimList">
+            <div style="width: 20%">{{item.value}}</div>
+            <div style="width: 20%"><input [(ngModel)]="item.label" style="width: 80%;"></div>
+            <div style="width: 15%">
+              <p-dropdown [options]="typeList" [(ngModel)]="item.type" [autoWidth]="false" [style]="{width:'80%'}" [placeholder]="'请选择'" [scrollHeight]="'100px'"></p-dropdown>
+            </div>
+            <div style="width: 15%">
+              <p-dropdown [options]="rateList" [(ngModel)]="item.rate" [autoWidth]="false" [style]="{width:'80%'}" [placeholder]="'请选择'" [scrollHeight]="'100px'"></p-dropdown>
+            </div>
+            <div style="width: 15%">
+              <p-dropdown [options]="sortList" [(ngModel)]="item.sort" [autoWidth]="false" [style]="{width:'80%'}" [placeholder]="'请选择'" [scrollHeight]="'100px'"></p-dropdown>
+            </div>
+            <div style="width: 15%">
+              <p-dropdown [options]="defaultSelectedList" [(ngModel)]="item.default" [autoWidth]="false" [style]="{width:'80%'}" [placeholder]="'请选择'" [scrollHeight]="'100px'" *ngIf="item.type == 'dimensions'"></p-dropdown>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="curChartType=='line'">
+          <div class="dimList">
+            <div style="width: 15%">字段名</div>
+            <div style="width: 15%">中文名</div>
+            <div style="width: 14%">指标或维度</div>
+            <div style="width: 14%">百分比显示</div>
+            <div style="width: 14%">排序</div>
+            <div style="width: 14%">显示类型</div>
+            <div style="width: 14%">y轴位置</div>
+          </div>
+          <div *ngFor="let item of dimList; let i of index" class="dimList">
+            <div style="width: 15%">{{item.value}}</div>
+            <div style="width: 15%"><input [(ngModel)]="item.label" style="width: 80%;"></div>
+            <div style="width: 14%">
+              <p-dropdown [options]="typeList" [(ngModel)]="item.type" [autoWidth]="false" [style]="{width:'80%'}" [placeholder]="'请选择'" [scrollHeight]="'100px'"></p-dropdown>
+            </div>
+            <div style="width: 14%">
+              <p-dropdown [options]="rateList" [(ngModel)]="item.rate" [autoWidth]="false" [style]="{width:'80%'}" [placeholder]="'请选择'" [scrollHeight]="'100px'"></p-dropdown>
+            </div>
+            <div style="width: 14%">
+              <p-dropdown [options]="sortList" [(ngModel)]="item.sort" [autoWidth]="false" [style]="{width:'80%'}" [placeholder]="'请选择'" [scrollHeight]="'100px'"></p-dropdown>
+            </div>
+            <div style="width: 14%">
+              <p-dropdown [options]="showTypeList" [(ngModel)]="item.show_type" [autoWidth]="false" [style]="{width:'80%'}" [placeholder]="'请选择'" [scrollHeight]="'100px'" *ngIf="item.type == 'indexs'"></p-dropdown>
+            </div>
+            <div style="width: 14%">
+              <p-dropdown [options]="yAxisList" [(ngModel)]="item.yAxis" [autoWidth]="false" [style]="{width:'80%'}" [placeholder]="'请选择'" [scrollHeight]="'100px'" *ngIf="item.type == 'indexs'"></p-dropdown>
+            </div>
+          </div>
+        </ng-container>
+
+        <div class="dimList" *ngIf="!dimList.length">
+          <div class="noList">请先配置SQL生成指标和维度</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <button class="bud-text-button slds-col--bump-left slds-m-right--small" (click)="dialogHide()">取消</button>
+      <button class="bud-button -origin" (click)="save()">保存</button>
+    </div>
+  </div>
+</div>

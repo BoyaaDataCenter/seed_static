@@ -1,0 +1,54 @@
+.app-help {
+  position: relative;
+  margin-left: 8px;
+  >.app-help__icon {
+    color: #aaa;
+    font-size: 14px;
+    cursor: pointer;
+    &:hover {
+      color: #2d3543;
+    }
+  }
+  >.app-warning__icon {
+    color: #df4f00;
+    font-size: 14px;
+    cursor: pointer;
+    &:hover {
+      color: #9c3700;
+    }
+  }
+  >.app-help__detail{
+    width: 188px;
+    position: absolute;
+    padding: 5px 0;
+    z-index: 777;
+    left: 14px;
+    top: -1px;
+    border-radius: 3px;
+    background-color: #fff9e9;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 2px 2px 0;
+    border: 1px solid #fdeab7;
+    line-height: 1.5;
+    max-height: 360px;
+    overflow-y: auto;
+    word-break: break-all;
+    display: none;
+    &.-active {
+      display: block;
+    }
+    >.app-help__info {
+      border-bottom: 1px solid #d9d9d9;
+      padding: 3px 10px;
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+    >.app-help__none {
+      padding: 5px 10px;
+    }
+  }
+  .app-hel__title {
+    color: #df4f00;
+  }
+
+}

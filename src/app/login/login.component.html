@@ -1,0 +1,48 @@
+<div id="loginPage">
+  <div id="login">
+    <div class="sysName">
+      <p class="name">seed自助平台</p>
+      <p class="desc">✧让数据更明了！</p>
+    </div>
+    <div class="container">
+      <div class="intro">
+        <a id="animateArr" class="ico_t">
+          <span class="cloud1 moveLeft"></span>
+          <span class="cloud2 moveRight"></span>
+          <span class="cloud3 moveLeft"></span>
+          <span class="airplane1 time0-5 to-tr"></span>
+          <span class="airplane2 time1 to-tr"></span>
+          <span class="mans to-tr"></span>
+          <span class="niao to-le"></span>
+          <span class="wenzi trans toleft">欢迎使用</span>
+        </a>
+      </div>
+      <div class="login_box">
+        <div class="face">
+          <em>
+            <img width="90" id="userHead" src="./../../assets/images/userFace.png" alt="">
+          </em>
+        </div>
+        <ul>
+          <li class="user">
+            <i class="on"></i>
+            <input type="text" class="txt" placeholder="账号" [(ngModel)]="account" (click)="inputStart()">
+          </li>
+          <li class="pass">
+            <i class="on"></i>
+            <input id="password" type="password" name="p" class="txt" placeholder="密码" [(ngModel)]="password" (click)="inputStart()">
+          </li>
+          <p class="erro_tips">{{errorMsg}}</p>
+          <li>
+            <span class="btn" (click)="userLogin()">登 录</span>
+          </li>
+          <p class="opers">
+            <span (click)="goToReset()">忘记密码&nbsp;&nbsp;></span>
+            <span (click)="goToRegister()">注册&nbsp;&nbsp;></span>
+          </p>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+

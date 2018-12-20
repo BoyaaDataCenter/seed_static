@@ -1,0 +1,127 @@
+.headerDropDown{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-right: 1px solid #ddd;
+  padding: 0 10px;
+  //height: 39px;
+
+  span:first-child{
+    padding: 0 10px;
+  }
+  
+  .set-btn{
+    margin-left: 10px;
+    font-size: 20px;
+    color: #DC4C00;
+    cursor: pointer;
+  }
+}
+
+.dropdownDialogBody{
+  font-size: 16px;
+  //display: flex;
+  //justify-content: center;
+  //align-items: flex-start;
+  //flex-direction: column;
+  padding: 12px;
+
+  .manualLsit{
+    margin-top: 20px;
+
+    .app-table {
+      width: 100%;
+      table-layout: fixed;
+      border-collapse: collapse;
+      border-spacing: 0;
+      th{
+        padding: 0 15px;
+        border-bottom: 1px solid #DDD;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        vertical-align: top;
+        font-weight: 600;
+        background-color: #f2f2f2;
+        color: #222;
+        font-size: .9em;
+        height: 35px;
+        line-height: 35px;
+        text-align: left;
+      }
+      td{
+        text-align: left;
+        height: 40px;
+        line-height: 40px;
+        padding: 0 15px;
+        border-bottom: 1px solid #DDD;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        vertical-align: top;
+      }
+      tr:hover {
+        td{
+          background-color: #fbfbfb;
+        }
+      }
+      .fa {
+        font-size: 24px;
+        cursor: pointer;
+        vertical-align: middle;
+      }
+      .fa-plus-circle {
+        color: #30bc73;
+      }
+      .fa-minus-circle {
+        color: #e2601a;
+        margin-left: 10px;
+      }
+    }
+  }
+
+
+  .item{
+    padding: 5px 0;
+    width: 100%;
+
+    div{
+      padding: 3px 0;
+    }
+
+    textarea{
+      width: 100%;
+      resize:none;
+      height: 100px;
+      font-size: 15px;
+      line-height: 1.2;
+    }
+  
+    .bud-input{
+      margin: 0;
+      width: 100%;
+    }
+    
+    .sourceConfig>div{
+      padding: 5px 0;
+    }
+    
+    .queryItem{
+      padding:  4px 10px;
+      background-color: #14a4ff;
+      color: #FFFFFF;
+      border-radius: 2px;
+      margin-right: 10px;
+      cursor: pointer;
+      
+    }
+  }
+
+  /deep/ {
+    .ui-radiobutton-icon {
+      display: block!important;
+      font-size: .6em;
+      line-height: inherit!important;
+    }
+  }
+}

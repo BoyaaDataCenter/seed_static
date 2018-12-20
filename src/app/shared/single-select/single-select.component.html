@@ -1,0 +1,9 @@
+<div>
+  <p-selectButton [options]="list" [ngModel]="selected" (onChange)="onSelectedChange($event, false)" [optionsTitle]="titleList"></p-selectButton>
+</div>
+<div
+  *ngIf="dropShow"
+  [class.-active]="dropSelected"
+  class="dropdown">
+  <p-dropdown [options]="listTwo" [ngModel]="selected" [autoWidth]="false" (onChange)="onSelectedChange($event, true)" [optionsTitle]="titleList"></p-dropdown>
+</div>

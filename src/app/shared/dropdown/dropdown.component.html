@@ -1,0 +1,89 @@
+<div>
+  <div class="headerDropDown">
+    <span>{{cnameTemp|| title || '查询条件'}}</span>
+    <p-dropdown [options]="optionsList" [ngModel]="selectedOption" [autoWidth]="true" (onChange)="onSelectedChange($event, true)" [style]="{'min-width': '120px','max-width': '220px'}"
+                [placeholder]="'请选择'" *ngIf="compType == 'singleSelect'" filter="true"></p-dropdown>
+    <p-multiSelect [options]="optionsList" [(ngModel)]="selectedOption" defaultLabel="请选择" [style]="{'min-width': '120px','max-width': '220px'}"  [selectedItemsLabel]="'已选{0}项'"
+                   [maxSelectedLabels]="3" *ngIf="compType == 'multiSelect'" (onChange)="onMultiSelectedChange($event)" (onPanelHide)="panelHide()"></p-multiSelect>
+    <span class="set-btn fa fa-cog" title="配置" (click)="setDefault($event)" *ngIf="isCanSet"></span>
+    <span class="set-btn fa fa-trash" title="删除" (click)="deleteComponent($event)" *ngIf="isCanSet"></span>
+  </div>
+  <!-- 弹窗 -->
+  <div class="bud-overlay" *ngIf="dialogVisible">
+    <div class="bud-operate-modal -small" style="width:600px;height: 570px">
+      <div class="header">
+        组件配置
+        <i class="fa fa-times" (click)="dialogHide()"></i>
+      </div>
+      <div class="body dropdownDialogBody">
+        <div class="item">
+          <div>中文名称</div>
+          <div>
+            <input class="bud-input" [(ngModel)]="cname" (click)="JQuery($event.target).focus()">
+          </div>
+        </div>
+        <div class="item">
+          <div>数据库字段</div>
+          <div>
+            <input class="bud-input" [(ngModel)]="ename" (click)="JQuery($event.target).focus()">
+          </div>
+        </div>
+        <div class="item">
+          <div>数据源</div>
+          <div class="sourceConfig">
+            <div>
+              <p-radioButton name="group1" value="dict" label="手动设置" [(ngModel)]="sourceType"></p-radioButton>
+              <p-radioButton name="group1" value="sql" label="SQL设置" [(ngModel)]="sourceType"></p-radioButton>
+            </div>
+            <div class="manualLsit" *ngIf="sourceType=='dict'">
+              <table class="app-table">
+                <thead>
+                <tr>
+                  <th>label(显示文本)</th>
+                  <th>value(选项值)</th>
+                  <th width="100px;">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of optionsListTemp;let i=index">
+                  <td>
+                    <input type="text" pInputText [(ngModel)]="item.label" (click)="JQuery($event.target).focus()"/>
+                  </td>
+                  <td>
+                    <input type="text" pInputText [(ngModel)]="item.value" (click)="JQuery($event.target).focus()"/>
+                  </td>
+                  <td>
+                    <i class="fa fa-plus-circle" aria-hidden="true" (click)="configAdd(i)"></i>
+                    <i class="fa fa-minus-circle" aria-hidden="true" (click)="configDelete(i)" *ngIf="optionsListTemp.length > 1"></i>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="autoSql" *ngIf="sourceType=='sql'">
+              <div class="item">
+                <div>业务数据库</div>
+                <div>
+                  <p-dropdown [options]="dbList" [ngModel]="dbSource" [autoWidth]="false" (onChange)="onDbChange($event, true)" [style]="{width:'100%'}" [placeholder]="'请选择'" [scrollHeight]="'150px'"></p-dropdown>
+                </div>
+              </div>
+              <div class="item">
+                <div>SQL查询语句</div>
+                <div>
+                  <textarea pInputTextarea [(ngModel)]="sqlSource" placeholder="通过SQL配置条件选项，规范：select field1 as label, field2 as value from table" (click)="JQuery($event.target).focus()" class="sqlConfig"></textarea>
+                </div>
+                <div>
+                  <span *ngFor="let item of queryParam" (click)="selectQuery(item[0])" class="queryItem">{{item[1]}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <button class="bud-text-button slds-col--bump-left slds-m-right--small" (click)="dialogHide()">取消</button>
+        <button class="bud-button -origin" (click)="save()">保存</button>
+      </div>
+    </div>
+  </div>
+</div>

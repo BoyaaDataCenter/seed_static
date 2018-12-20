@@ -1,0 +1,182 @@
+.role-menu-list-header{
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+  height: 50px;
+  padding: 0 15px;
+  color: #777;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.role-menu-list-main {
+  background-color: #fff;
+  border: 1px solid #DDD;
+  border-radius: 0 0 4px 4px;
+  margin: 20px 15px 0;
+  
+  .menuHeader{
+    border-bottom: 1px solid #d9d9d9;
+    font-size: 12px;
+    color: #1b1d1f;
+    padding: 0 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 36px;
+    background-color: #f0f0f0;
+    
+    .roleSelector{
+    
+    }
+    
+    .saveMenu{
+      vertical-align: middle;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      border-radius: 3px;
+      cursor: pointer;
+      color: #fff;
+      background: #df4f00;
+      border: 1px solid #c04400;
+      padding: 0 10px;
+      line-height: 22px;
+    }
+    
+    .saveMenu:hover{
+      background: #e2601a;
+    }
+  }
+  
+  .noList{
+    text-align: center;
+    color: #aaa;
+    line-height: 50px;
+  }
+  
+  .title{
+    display: flex;
+    align-items: center;
+    height: 36px;
+    background-color: #f0f0f0;
+    margin: 10px 8px 0;
+    border: 1px solid #ddd;
+    border-bottom: 0;
+    
+    div{
+      width: 40%;
+      padding: 8px;
+    }
+    
+    div:last-child{
+      border-left: 1px solid #ddd;
+      width: 60%;
+    }
+  }
+  
+  .bud-tree {
+    border: 1px solid #ddd;
+    border-bottom: 0;
+    margin: 0 8px 8px;
+  }
+  
+  
+  .bud-tree .item>.header {
+    border-bottom: 1px solid #ddd;
+    background-color: #fff;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-line-pack: center;
+    align-content: center;
+    position: relative;
+    height: 38px;
+  }
+  
+  .bud-tree .item>.header>.menuName {
+    display: flex;
+    align-items: center;
+    padding: 4px 8px;
+  }
+  
+  .bud-tree .item>.header>.operate {
+    left: 40%;
+    width: 60%;
+    position: absolute;
+    border-left: 1px solid #ddd;
+    padding: 4px 8px;
+  }
+  
+  .bud-tree .item>.header:hover {
+    background-color: #f0f0f0
+  }
+  
+  .bud-tree .item.-level-two>.header {
+    padding-left: 35px
+  }
+  
+  .bud-tree .item.-level-three>.header {
+    padding-left: 65px
+  }
+  
+  .switch-tgl>.input {
+    display: none;
+  }
+  .switch-tgl>.input {
+    display: none
+  }
+  
+  .switch-tgl>.input:checked+.label:after {
+    left: 50%;
+    background: #5cb85c
+  }
+  
+  .switch-tgl>.input:disabled+.label,.switch-tgl>.input:disabled+.label:after {
+    cursor: not-allowed
+  }
+  
+  .switch-tgl>.label {
+    outline: 0;
+    display: block;
+    width: 54px;
+    height: 30px;
+    position: relative;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid #ddd;
+    border-radius: 2em;
+    padding: 2px
+  }
+  
+  .switch-tgl>.label:after,.switch-tgl>.label:before {
+    position: relative;
+    display: block;
+    content: "";
+    width: 50%;
+    height: 100%
+  }
+  
+  .switch-tgl>.label:after {
+    left: 0;
+    border-radius: 50%;
+    background: #ddd
+  }
+  
+  .switch-tgl>.label:before {
+    display: none
+  }
+  
+  .switch-tgl>.label::-moz-selection {
+    background: 0 0
+  }
+  
+  .switch-tgl>.label::selection {
+    background: 0 0
+  }
+}

@@ -1,0 +1,403 @@
+#business-config{
+  width: 100%;
+
+  .business-list-main {
+    padding: 2em 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    .title{
+      margin-left: 0.6em;
+      font-size: 1.6em;
+      font-weight: bold;
+    }
+
+    .titleOther{
+      margin-top: 20px;
+    }
+
+    .business-list{
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      flex-wrap: wrap;
+
+      .item{
+        margin: 14px;
+        width: 350px;
+        height: 180px;
+        border: 1px solid #ddd;
+        border-radius: 2px;
+        box-shadow: 0 0 2px 2px #e3e2e2;
+        padding: 0.5em;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-around;
+        background-color: #ffffff;
+
+        .operate{
+          text-align: right;
+          font-size: 1.3em;
+          color: #c1c1c1;
+          width: 100%;
+          height: 1.2em;
+
+          span{
+            margin: 0 4px;
+          }
+
+          .fa-edit:hover, .fa-trash:hover{
+            color: #7a7a7a;
+            cursor: pointer;
+          }
+        }
+
+        .main{
+          height: 7em;
+          position: relative;
+
+          .icon{
+            background: url("./../../assets/images/businessIcon.png") no-repeat 0 0;
+            background-size: 100% 100%;
+            width: 4em;
+            height: 4em;
+            position: absolute;
+            left: 1em;
+          }
+
+          .info{
+            position: absolute;
+            width: 17em;
+            left: 6em;
+
+            .name{
+              margin-bottom: 0.5em;
+              overflow: hidden;
+              text-overflow:ellipsis;
+              white-space: nowrap;
+              font-size: 16px;
+            }
+
+            .desc{
+              overflow: hidden;
+              text-overflow: ellipsis;
+              display: -webkit-box;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 4;
+              line-height: 1.3;
+              height: 5.2em;
+              color: #aaaaaa;
+              overflow: hidden;
+            }
+          }
+        }
+
+        .no-list{
+          width: 100%;
+          text-align: center;
+
+          img{
+            height: 5rem;
+            margin-bottom: 0;
+          }
+        }
+
+        .admin,.create-time{
+          color: #aaaaaa;
+          overflow: hidden;
+          text-overflow:ellipsis;
+          white-space: nowrap;
+          width: 98%;
+        }
+      }
+      .item:hover{
+        transform: scale(1.03);
+        cursor: pointer;
+      }
+
+      .addItem{
+        justify-content: center;
+        align-items: center;
+
+        div{
+          font-size: 20px;
+          color: #aaa;
+        }
+      }
+    }
+
+    @media screen and (min-width:1600px){
+      .business-list{
+        width: 1520px;
+      }
+    }
+
+    @media screen and (min-width:1200px) and (max-width:1599px){
+      .business-list{
+        width: 1140px;
+      }
+    }
+
+    @media screen and (max-width:1199px){
+      .business-list{
+        width: 760px;
+      }
+    }
+  }
+
+  .businessDialogBody{
+    font-size: 16px;
+    padding: 12px;
+
+    .steps{
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 30px;
+      margin-top: 10px;
+      .stepItem{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        .stepNum{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: #ffffff;
+          background-color: #CCCCCC;
+          border-radius: 50%;
+          width: 20px;
+          height: 20px;
+          margin-right: 2px;
+        }
+        .stepNum.active{
+          background-color: #30bc73;
+        }
+      }
+
+      .stepLine{
+        width: 100px;
+        height: 2px;
+        background-color: #CCCCCC;
+      }
+      .stepLine.active{
+        background-color: #30bc73;
+      }
+    }
+
+    .mainContent{
+      margin: 20px 12px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-direction: column;
+
+      .mainItem{
+        width: 100%;
+        div{
+          padding: 4px 0;
+          width: 100%;
+        }
+
+        .bud-input{
+          margin: 0;
+          width: 100%;
+        }
+
+        .textarea{
+          font-size: 14px;
+        }
+
+        .dbIPAndHost{
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .dbIP{
+          width: 75%;
+          display: inline-block;
+        }
+
+        .dbHost{
+          width: 20%;
+          display: inline-block;
+        }
+
+        .dbAccounts{
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          .bud-input{
+            width: 47.5%;
+          }
+
+          .password-input{
+            padding-right: 38px;
+          }
+        }
+      }
+    }
+
+    .dbContent{
+      margin: 25px 12px 0;
+      min-height: 220px;
+
+      .operateAdd{
+        height: 30px;
+        text-align: right;
+
+        div{
+          background-color: #30bc73;
+          display: inline-block;
+          padding: 5px 12px;
+          color: #fff;
+          border-radius: 4px;
+          font-size: 14px;
+        }
+
+        div:hover{
+          cursor: pointer;
+          box-shadow: 0 0 2px 2px #cccccc;
+        }
+
+      }
+    }
+
+    .reviewContent{
+      margin: 25px 12px 0;
+
+      .reviewItem{
+        width: 100%;
+        font-size: 16px;
+
+        .title{
+          font-size: 20px;
+          font-weight: bold;
+          margin-left: 0;
+        }
+
+        .lastTitle{
+          margin-top: 20px;
+        }
+
+        p{
+          margin: 10px 0;
+          line-height: 1.2;
+        }
+
+        .infoItem{
+          display: flex;
+          justify-content: flex-start;
+          align-items: flex-start;
+
+          p:first-child{
+            min-width: 100px;
+          }
+        }
+      }
+    }
+
+    .list-table {
+      width: 100%;
+      table-layout: fixed;
+      border-collapse: collapse;
+      border-spacing: 0;
+      th{
+        padding: 0 15px;
+        border-bottom: 1px solid #DDD;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        vertical-align: top;
+        font-weight: 600;
+        background-color: #f2f2f2;
+        color: #222;
+        font-size: .9em;
+        height: 35px;
+        line-height: 35px;
+        text-align: left;
+        min-width: 150px;
+      }
+      td{
+        text-align: left;
+        height: 40px;
+        line-height: 40px;
+        padding: 0 15px;
+        border-bottom: 1px solid #DDD;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        vertical-align: top;
+      }
+      tr:hover {
+        td{
+          background-color: #DDD;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .marginTop{
+      margin-top: 10px;
+    }
+
+    .list-empty {
+      color: #aaa;
+      text-align: center;
+      height: 60px;
+      line-height: 60px;
+    }
+
+    .showPassword{
+      color: #aaa;
+      position: absolute;
+      right: 36px;
+      cursor: pointer;
+    }
+
+    .btns{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 45px;
+
+      div{
+        height: 40px;
+        width: 150px;
+        line-height: 40px;
+        font-weight: 400;
+        color: #fff;
+        margin: 0 10px;
+        border-radius: 4px;
+        text-align: center;
+        cursor: pointer;
+      }
+
+      div:hover{
+        box-shadow: 0 0 2px 2px #cccccc;
+      }
+
+      .goBack,.goNext,.commit,.testConnect{
+        background-color: #30bc73;
+      }
+
+      .cancel{
+        border: 1px solid #ccc;
+        color: #AAAAAA;
+      }
+
+      .finish{
+        background-color: #e2601a;
+      }
+    }
+
+    /deep/ .ui-multiselect-panel{
+      width: 100%;
+    }
+  }
+}

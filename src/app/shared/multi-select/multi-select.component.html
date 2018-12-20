@@ -1,0 +1,27 @@
+<div class="header" (click)="op.toggle($event)">
+  <i class="fa fa-pencil-square-o slds-m-right--x-small"></i>
+  <span>{{title}}</span>
+</div>
+<p-overlayPanel
+  (onBeforeHide)="onBeforeHide()"
+  #op>
+  <div class="slds-grid slds-grid--vertical-align-center">
+    <input
+      [ngModel]="search"
+      (ngModelChange)="searchChange($event)"
+      class="slds-m-right--small" placeholder="输入关键字搜索">
+    <p-checkbox [binary]="true"
+                (onChange)="allSelectedChange($event)"
+                [ngModel]="selectedValue"  label="全选/全不选"></p-checkbox>
+  </div>
+  <div class="slds-grid slds-wrap item-list slds-m-top--small">
+      <span class="item slds-m-right--small slds-m-bottom--xx-small"
+            [class.-active]="item.selected"
+            *ngFor="let item of list | filter:search:['cname']"
+            (click)="toggleState(item)">{{item.cname}}</span>
+  </div>
+  <div class="slds-grid slds-grid--align-end slds-m-top--xx-small">
+    <button (click)="cancel()">取消</button>
+    <button class="slds-m-left--xx-small" (click)="ensure()">确认</button>
+  </div>
+</p-overlayPanel>

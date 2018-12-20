@@ -1,0 +1,102 @@
+<div
+  [class.-active]="showStatus"
+  [class.-border]="!isGlobal"
+  [class.-range]="mode === 'range'"
+  (click)="show()"
+  class="flatpickr">
+  <i class="fa fa-calendar"></i>
+  <div class="input">
+    <input #flatpickr
+           type="text"
+           [style.width]="width">
+    <div class="shortcut" *ngIf="mode === 'range'">
+      <div class="item-list">
+        <div class="item"
+             [class.-active]="item.active"
+             *ngFor="let item of shortcutList"
+             (click)="shortcutClick(item.value)">
+          {{item.label}}
+        </div>
+      </div>
+      <div class="header">
+        <div class="date-box">
+          <input class="bud-input" [(ngModel)]="inputDate.sdate">
+          <span class="separate">-</span>
+          <input class="bud-input" [(ngModel)]="inputDate.edate">
+        </div>
+        <div class="date-ensure" (click)="inputDateEnsure()">确认输入</div>
+      </div>
+    </div>
+  </div>
+  <i class="fa fa-caret-down" style="color: #555;"></i>
+  <span class="set-btn fa fa-cog" title="配置" (click)="setDefaultTime($event)" *ngIf="isCanSet"></span>
+  <span class="set-btn fa fa-trash" title="删除" (click)="deleteComponent($event)" *ngIf="isCanSet"></span>
+</div>
+
+<!-- 弹窗 -->
+<div class="bud-overlay" *ngIf="dialogVisible">
+  <div class="bud-operate-modal -small" style="width:500px;height: 550px">
+    <div class="header">
+      设置日期配置
+      <i class="fa fa-times" (click)="dialogHide()"></i>
+    </div>
+    <div class="body multiDialogBody">
+      <div class="item">
+        <div>中文名称</div>
+        <div>
+          <input class="bud-input" [(ngModel)]="cname">
+        </div>
+      </div>
+      <div class="item">
+        <div>数据库字段</div>
+        <div>
+          <input class="bud-input" [(ngModel)]="ename">
+        </div>
+      </div>
+      <div class="item" (click)="JQuery('.userListDialogBody').find('input').blur()">
+        <div>默认显示天数：</div>
+        <div>
+          <p *ngFor=" let item of timeList">
+            <p-radioButton  name="timeCheck" [value]="item.value" [label]="item.label" [(ngModel)]="timeType"></p-radioButton>
+          </p>
+          <p>
+            <p-radioButton  name="timeCheck" [value]="100" [label]="'自定义时间段'" [(ngModel)]="timeType" (click)="JQuery('.userListDialogBody').find('input').focus();$event.stopPropagation();"></p-radioButton>
+            <input placeholder="输入筛选天数，例如：30" class="bud-input ng-untouched ng-pristine ng-valid" [(ngModel)]="otherTime" (click)="JQuery($event.target).focus();$event.stopPropagation();">
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <button class="bud-text-button slds-col--bump-left slds-m-right--small" (click)="dialogHide()">取消</button>
+      <button class="bud-button -origin" (click)="save(1)">保存</button>
+    </div>
+  </div>
+</div>
+
+<div class="bud-overlay" *ngIf="singleDialogVisible">
+  <div class="bud-operate-modal -small" style="width:500px;height: 350px">
+    <div class="header">
+      设置日期配置
+      <i class="fa fa-times" (click)="dialogHide()"></i>
+    </div>
+    <div class="body singleDialogBody">
+      <div class="item">
+        <div>中文名称</div>
+        <div>
+          <input class="bud-input" [(ngModel)]="cname">
+        </div>
+      </div>
+      <div class="item">
+        <div>数据库字段</div>
+        <div>
+          <input class="bud-input" [(ngModel)]="ename">
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <button class="bud-text-button slds-col--bump-left slds-m-right--small" (click)="dialogHide()">取消</button>
+      <button class="bud-button -origin" (click)="save(2)">保存</button>
+    </div>
+  </div>
+</div>
+

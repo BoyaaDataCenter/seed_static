@@ -1,0 +1,62 @@
+<div class="compList">
+  <ng-container *ngFor="let item of headerCompList;let i = index">
+    <app-flatpickr *ngIf="item.type == 'flatpickr' && !item.status"
+                   [mode]="item.mode"
+                   [timeType]="item.timeType"
+                   [otherTime]="item.otherTime"
+                   [cname]="item.cname"
+                   [ename]="item.ename"
+                   [isCanSet]="isCanSet"
+                   [isGlobal]="isGlobal"
+                   [globalComp] = "isGlobal"
+                   [cid] = i
+                   [id] = "item.id"
+                   [pCid] = "pCid"
+                   (deleteComp)="onDeleteComp(i)"
+                   (configChange)="onConfigChange($event)"
+                   (selectedChange)="onSelectedChange($event)"
+    ></app-flatpickr>
+    <app-dropdown *ngIf="(item.type == 'singleSelect' || item.type == 'multiSelect') && !item.status"
+                  [compType]="item.type"
+                  [optionsList]="item.list"
+                  [globalComp] = "isGlobal"
+                  [db]="item.db"
+                  [sql]="item.sql"
+                  [isCanSet]="isCanSet"
+                  [panelQueryParam]="panelQueryParam"
+                  [cid]= i
+                  [id] = "item.id"
+                  [pCid] = "pCid"
+                  [cname]="item.cname"
+                  [ename]="item.ename"
+                  [cascades]="item.cascades"
+                  [sourceType]="item.sourceType"
+                  (deleteComp)="onDeleteComp(i)"
+                  (configChange)="onConfigChange($event)"
+                  (selectedChange)="onSelectedChange($event)"
+    ></app-dropdown>
+  </ng-container>
+  <div class="addQueryComp" (click)="addQueryComp()" *ngIf="showAddBtn">添加过滤条件</div>
+</div>
+<!-- 弹窗 -->
+<div class="bud-overlay" *ngIf="dialogSqueryVisible">
+  <div class="bud-operate-modal -small" style="width:500px;min-height: 350px;height: 350px">
+    <div class="header">
+      添加过滤条件
+      <i class="fa fa-times" (click)="dialogHide()"></i>
+    </div>
+    <div class="body reportQueryDialogBody">
+      <div class="item">
+        <div>过滤类型</div>
+        <div>
+          <p-dropdown [options]="compListName" [ngModel]="" [autoWidth]="false" (onChange)="selectValue($event, true)" [placeholder]="'请选择'" [style]="{width:'100%'}"></p-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <button class="bud-text-button slds-col--bump-left slds-m-right--small" (click)="dialogHide()">取消</button>
+      <button class="bud-button -origin" (click)="save()">保存</button>
+    </div>
+  </div>
+</div>
+

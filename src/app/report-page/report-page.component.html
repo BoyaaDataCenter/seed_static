@@ -1,0 +1,28 @@
+  <app-sys-header></app-sys-header>
+  <div class="report-page-header">
+    <div class="editPage" (click)="editPage()" *ngIf="showConfigBtn">编辑页面</div>
+    <div class="header" id="queryBody">
+      <app-report-query
+        [headerCompList]="headerCompList"
+        [isGlobal]="true"
+      ></app-report-query>
+    </div>
+  </div>
+  <div class="body" id="chartBody">
+    <ng-container *ngFor="let item of panelCompList;let i = index;" >
+      <div class="content" *ngIf="!item.status" [style.width] = "item.w + '%'" >
+        <div class="main">
+          <app-report-element
+            [reportInfo]="item"
+            [cid]="i"
+            [isCanSet]="false"
+          >
+          </app-report-element>
+        </div>
+
+      </div>
+    </ng-container>
+  </div>
+
+
+

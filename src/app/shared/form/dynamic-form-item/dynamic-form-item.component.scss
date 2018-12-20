@@ -1,0 +1,18 @@
+.grid-box {
+  display: flex;
+  > div {
+    margin-right: 10px;
+  }
+}
+
+.error {
+  background-color: #f4f4f4;
+  padding: 5px 8px;
+  border-radius: 3px;
+  color: #f0ad4e;
+  > .fa {
+    color: #f0ad4e;
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+}

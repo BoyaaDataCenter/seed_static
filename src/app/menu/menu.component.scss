@@ -1,0 +1,168 @@
+.menu-list-header{
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+  height: 50px;
+  padding: 0 15px;
+  color: #777;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+  font-weight: bold;
+
+  .bar-button{
+    font-size: 13px;
+  }
+}
+
+.menu-list-main {
+  background-color: #fff;
+  border: 1px solid #DDD;
+  border-radius: 0 0 4px 4px;
+  margin: 20px 15px 0;
+
+  .menuHeader{
+    border-bottom: 1px solid #d9d9d9;
+    font-size: 12px;
+    color: #1b1d1f;
+    padding: 0 4px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 36px;
+    background-color: #f0f0f0;
+
+    .addLevelOneMenu{
+      background: #fff;
+      border: 1px solid #d6d6d6;
+      color: #555;
+      vertical-align: middle;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      border-radius: 3px;
+      cursor: pointer;
+      padding: 0 10px;
+      line-height: 22px;
+      margin-right: 10px;
+    }
+
+    .addLevelOneMenu:hover{
+      background: #eee;
+      border: 1px solid silver;
+      color: #212121;
+    }
+
+    .saveMenu{
+      vertical-align: middle;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      border-radius: 3px;
+      cursor: pointer;
+      color: #fff;
+      background: #df4f00;
+      border: 1px solid #c04400;
+      padding: 0 10px;
+      line-height: 22px;
+    }
+
+    .saveMenu:hover{
+      background: #e2601a;
+    }
+  }
+
+  .active{
+    background-color: rgba(255, 215, 127, 0.62) !important;
+  }
+
+  .tipText{
+    background-color: #faebd7;
+    border-radius: 3px;
+    padding: 5px 10px;
+    color: #b5905e;
+    font-size: 12px;
+    line-height: 12px;
+    margin: 8px;
+
+    p{
+      margin: 5px 0 5px 10px;
+    }
+  }
+
+  .noList{
+    text-align: center;
+    color: #aaa;
+    line-height: 50px;
+  }
+
+  .bud-tree {
+    border: 1px solid #ddd;
+    border-bottom: 0;
+    margin: 0 8px 8px;
+  }
+
+  .bud-tree .item>.header {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    background-color: #fff;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-line-pack: center;
+    align-content: center;
+    cursor: move;
+
+    .fa-arrows{
+      margin-right: 4px;
+    }
+  }
+
+  .bud-tree .item>.header .bud-control {
+    margin-bottom: 0
+  }
+
+  .bud-tree .item>.header>.operate {
+    margin-left: auto
+  }
+
+  .bud-tree .item>.header>.operate>.fa {
+    margin-right: 10px
+  }
+
+  .bud-tree .item>.header:hover {
+    background-color: #f0f0f0
+  }
+
+  .bud-tree .item.-level-two>.header {
+    padding-left: 35px
+  }
+
+  .bud-tree .item.-level-three>.header {
+    padding-left: 65px
+  }
+}
+
+.menuListDialogBody{
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  padding: 12px;
+
+  .item{
+    padding: 10px 0;
+    width: 100%;
+
+    div{
+      padding: 3px 0;
+    }
+  }
+
+  .bud-input{
+    margin: 0;
+    width: 100%;
+  }
+}
+

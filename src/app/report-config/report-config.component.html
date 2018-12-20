@@ -1,0 +1,64 @@
+<app-sys-header></app-sys-header>
+<div id="reportConfig">
+  <div class="compMenu">
+    <div class="compGroup" [ngClass] = "{'active': compList[0].active}">
+      <div class="groupTitle" (click)="targetList(0)">
+        <a>{{compList[0].groupTitle}}</a>
+        <span class="ui-panelmenu-icon fa ng-tns-c2-1" [ngClass] = "{'fa-caret-down': compList[0].active, 'fa-caret-right': !compList[0].active}"></span>
+      </div>
+      <div class="itemList" id="chartList">
+        <div class="item" *ngFor="let item of compList[0].groupList; let i = index" [attr._type]="item.type">
+          <img [src]="item.icon">
+          <p>{{item.name}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="compGroup" (click)="targetList(1)" [ngClass] = "{'active': compList[1].active}">
+      <div class="groupTitle">
+        <a>{{compList[1].groupTitle}}</a>
+        <span class="ui-panelmenu-icon fa ng-tns-c2-1" [ngClass] = "{'fa-caret-down': compList[1].active, 'fa-caret-right': !compList[1].active}"></span>
+      </div>
+      <div class="itemList" id="queryList">
+        <div class="item" *ngFor="let item of compList[1].groupList; let i = index" [attr._type]="item.type">
+          <img [src]="item.icon">
+          <p>{{item.name}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+      <div class="goBack" (click)="goBack()">退出编辑</div>
+      <div class="savePage" (click)="savePage()">保存页面</div>
+      <div class="header" id="queryBody">
+        <app-report-query
+          [headerCompList]="headerCompList"
+          [panelQueryParam]="globalQueryParam"
+          [isGlobal]="true"
+          [isCanSet]="true"
+          (deleteComp)="onDeleteComp($event)"
+        ></app-report-query>
+      </div>
+      <div class="body" id="chartBody">
+        <ng-container *ngFor="let item of panelCompList;let i = index;" >
+          <div class="content" *ngIf="!item.status" [style.width] = "item.w + '%'"  [attr._cid]="i">
+            <div class="header"></div>
+            <div class="main">
+              <app-report-element
+                [reportInfo]="item"
+                [cid]="i"
+                [isCanSet]="true"
+                [isShowAddBtn]="true"
+                (deletePanelComp)="onDeletePanelComp($event)"
+                (configChange)="onConfigChange($event)"
+              >
+              </app-report-element>
+            </div>
+            <!--<span class="resizableHandle" (mousedown)="resizable($event,i)"></span>-->
+          </div>
+        </ng-container>
+        <!--<ng-container *ngFor="let item of panelCompList;let i = index;">-->
+
+        <!--</ng-container>-->
+      </div>
+  </div>
+</div>

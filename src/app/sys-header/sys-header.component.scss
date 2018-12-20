@@ -1,0 +1,90 @@
+#sysHeader{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 50px;
+  font-size: 20px;
+  color: #7f7f7f;
+  background-color: #fbfbfb;
+  border-bottom: 1px solid #ddd;
+  padding: 0 20px;
+  position: relative;
+  z-index: 11;
+
+  i{
+    margin: 0 10px;
+    cursor: pointer;
+
+    &:hover{
+      color: #5b5b5b;
+    }
+  }
+
+  .userOper{
+    height: 100%;
+    //width: 36px;
+    position: relative;
+    margin-left: 15px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    span{
+      font-size: 16px;
+      font-weight: 700;
+      margin-left: 14px;
+    }
+
+    &:hover{
+      .opers{
+        display: block;
+      }
+    }
+
+    .userAvatar{
+      height: 36px;
+      width: 36px;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+
+    .opers{
+      display: none;
+      position: absolute;
+      width: 120px;
+      border: 1px #EEEEEE solid;
+      font-size: 15px;
+      background-color: #fbfbfb;
+      top: 49px;
+      left: -1px;
+      border-top: 0;
+      border-radius: 0 0 0 6px;
+
+      p{
+        margin: 0;
+        padding: 14px 0;
+        border-bottom: 1px #EEEEEE solid;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &:hover{
+          background-color: #aaa;
+          color: #fbfbfb;
+          cursor: pointer;
+        }
+
+        &:last-child {
+          border-bottom: 0;
+        }
+
+        i{
+          margin-left: 0;
+        }
+
+      }
+    }
+  }
+
+
+}
