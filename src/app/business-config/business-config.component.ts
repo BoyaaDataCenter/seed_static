@@ -87,26 +87,21 @@ export class BusinessConfigComponent implements OnInit {
   ngOnInit() {
     this.userInfo = this.globalDataService.getParams().userInfo;
     this.getBusinessList();
+    this.getUserList();
   }
 
   // 获取业务列表
   getBusinessList() {
     this.businessConfigService.getBusinessList().subscribe((listData) => {
       this.businessList = listData;
-      let flag = false;
-      for (let i = 0; i < this.businessList.my_bussiness.length; i++) {
-        if (this.businessList.my_bussiness[i]['edit'] == true) {
-          flag = true;
-          break;
-        }
-      }
-      if (flag) {
-        // 业务管理员和超级管理员有编辑权限，编辑业务需要系统用户列表
-        this.userListService.getSysUserList().subscribe((userList) => {
-          this.userList = userList;
-        });
-      }
       this.isShowData = true;
+    });
+  }
+
+  getUserList() {
+    // 业务管理员和超级管理员有编辑权限，编辑业务需要系统用户列表
+    this.userListService.getSysUserList().subscribe((userList) => {
+      this.userList = userList;
     });
   }
 
