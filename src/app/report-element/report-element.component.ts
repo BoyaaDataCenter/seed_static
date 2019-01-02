@@ -643,7 +643,7 @@ export class ReportElementComponent implements OnInit, OnDestroy {
           const target = that_.JQuery('.main .reoprt-element-panel_' + that_.cid);
           that_.rw = ((target.width() + 4) / that_.bodySize.width * 100).toFixed(2);
           that_.rh = ((target.height() - 60) / that_.bodySize.height * 100).toFixed(2);
-          that_.reportInfo.w = +that_.rw;
+          that_.reportInfo.w = +that_.rw > 100 ? 100 : +that_.rw;
           that_.reportInfo.h = +that_.rh;
           setTimeout(() => {that_.noChange = true; editArea.css({'height': 'auto'}); editArea = null; }, 20);
         }
