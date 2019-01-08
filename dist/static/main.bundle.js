@@ -24118,14 +24118,13 @@ var ReportElementComponent = (function () {
         this.reportElementService.getSqlData(data).subscribe(function (succData) {
             _this.showConfigTip = false;
             _this.hasConfig = true;
-            if (_this.showChart) {
-                _this.chartData = succData;
-                _this.setChartOption();
+            if (!_this.showChart) {
+                var chartType_ = _this.reportInfo.charttype.split('_');
+                _this.showChart = true;
+                _this.curChartType = chartType_[0];
             }
-            else {
-                _this.tableData = succData;
-                _this.setTableData();
-            }
+            _this.chartData = succData;
+            _this.setChartOption();
             _this.dialogHide();
             _this.loadingHide();
             _this.globalDataService.onCompChange({ 'isGlobal': false, 'type': 'chart', 'cid': _this.cid, 'param': { 'db_source': data['db_source'],

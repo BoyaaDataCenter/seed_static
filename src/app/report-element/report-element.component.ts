@@ -602,13 +602,13 @@ export class ReportElementComponent implements OnInit, OnDestroy {
     this.reportElementService.getSqlData(data).subscribe((succData) => {
       this.showConfigTip = false;
       this.hasConfig = true;
-      if (this.showChart) {
-        this.chartData = succData;
-        this.setChartOption();
-      }else {
-        this.tableData = succData;
-        this.setTableData();
+      if (!this.showChart) {
+        const chartType_ = this.reportInfo.charttype.split('_');
+        this.showChart = true;
+        this.curChartType = chartType_[0];
       }
+      this.chartData = succData;
+      this.setChartOption();
       this.dialogHide();
       this.loadingHide();
       this.globalDataService.onCompChange({'isGlobal': false, 'type': 'chart', 'cid': this.cid, 'param': {'db_source': data['db_source'],
