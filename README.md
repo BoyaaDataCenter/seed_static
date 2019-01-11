@@ -6,6 +6,10 @@
 
 - [angular-cli](https://github.com/angular/angular-cli) 
 
+### 推荐node版本
+
+- v6.8.1  建议使用nvm进行node版本管理
+
 ### 第三方库
 
 通过 `npm` 管理的库，在 `package.json` 中 `dependencies` 查看，下面列出的插件，没有通过 `npm`管理, 所以重点说明：
@@ -50,7 +54,7 @@ src
 
 环境名称 |  配置文件 | 运行命令
 --- | --- | --- 
-正式环境 | environment.ts | npm run build
+正式环境 | environment.prod.ts | npm run buildProd
 本地环境 | environment.dev.ts | npm run start
 
 
@@ -59,26 +63,11 @@ src
 ### 本地开发
 
 1. 执行 `npm install` 安装依赖包。
-2. angular-cli.json文件中的project -> ejected字段的值修改为 false。
-3. 执行 `package.json` 中 `scripts` 配置里以 `start` 开头的脚本，例如执行 `npm run start` 将启动一个监听
+2. 执行 `package.json` 中 `scripts` 配置里以 `start` 开头的脚本，例如执行 `npm run start` 将启动一个监听
 `8080` 端口的服务（若启动不成功，检查下8080端口是否被其它服务占用了）。
 
 
-### 编译上线（非打包）
+### 编译上线
 
-1. angular-cli.json文件中的project -> ejected字段的值修改为 false。
-2. 执行相应的编译脚本，同样的编译脚本在 `package.json` 的 `scripts` 配置中，只是编译类的脚本以 `build` 开头，例如编译开发环境的代码，
+1. 执行相应的编译脚本，同样的编译脚本在 `package.json` 的 `scripts` 配置中，只是编译类的脚本以 `build` 开头，例如编译开发环境的代码，
 执行 `npm run buildDev` ，编译完成后即可。 
-
-### 编译资源包（与后端代码混合）
-
-1. angular-cli.json文件中的project -> ejected字段的值修改为 true。
-2. 执行npm run build指令即可生成前端的资源包。
-3. 把资源包替换到这个目录（seed_server\src\seed\static）下即可。
-
-
-  
-  
-  
-  
-
