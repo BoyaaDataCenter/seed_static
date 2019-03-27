@@ -117,6 +117,11 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
   // 维度列表
   @Input() dimList = [];
   @Input() dimSelected = [];
+  // 列过滤
+  @Input() filterList = [];
+  // 是否是单独的表格组件
+  @Input() isTableComp = false;
+
 
   // 点击编辑按钮事件
   @Output() onRowEdit = new EventEmitter<any>();
@@ -129,6 +134,9 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
   @Output() selectChange: EventEmitter<any> = new EventEmitter<any>();
   // 根据维度展开图表
   @Output() tableDimChange: EventEmitter<any> = new EventEmitter<any>();
+
+  // 根据列过滤值变化
+  @Output() filterChange: EventEmitter<any> = new EventEmitter<any>();
 
   @Input() limitNum = 0;
 
@@ -160,6 +168,12 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
 
   tableDimValue = [];
 
+  // 单独表格组件下拉过滤条件
+  tableFilterList = [];
+  filterSelected = [];
+
+  filterNum = 0;
+
   _data = [];
   _columns;
 
@@ -175,6 +189,18 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
   ngOnChanges(changes) {
     if (changes.columns && changes.columns.currentValue && this.viewInit) {
       this.setTableSizeInfo();
+    }
+    // 如果单表格总列数出现变化,重新计算
+    if (this.filterNum != this.filterList.length && this.isTableComp) {
+      this.filterNum = this.filterList.length;
+      this.filterSelected = [];
+      this.tableFilterList = [];
+      this.filterList.forEach((item) => {
+        this.tableFilterList.push({'label': item.label, 'value': item.value});
+        if (item.type == 'indexs' || item.default) {
+          this.filterSelected.push(item.value);
+        }
+      });
     }
   }
 
@@ -396,6 +422,10 @@ export class DataTableComponent implements OnInit, OnChanges, AfterViewInit {
       }
     });
     this.selectChange.emit({'type': 'dimensions', 'value': this.dimSelected});
+  }
+
+  selectFilterValue(target) {
+    this.filterChange.emit({'filterData': this.filterSelected});
   }
 
   changeDataByDim(target) {

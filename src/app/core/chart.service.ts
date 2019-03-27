@@ -35,6 +35,7 @@ export class ChartService {
   ) {}
 
   getChartOptionByType(chartConfig, data) {
+    console.log('chartConfig', chartConfig, 'data', data);
     this.userChartConfig = JSON.parse(JSON.stringify(chartConfig));
     this.userChartData = JSON.parse(JSON.stringify(data));
     this.initConfig();
@@ -42,6 +43,9 @@ export class ChartService {
 
     if (this.userChartConfig.base === 'pie') {
       chartOption = this.getPieConfig();
+    } else if (this.userChartConfig.base === 'funnel') {
+      chartOption = this.getFunnel();
+
     }else {
       // 数据格式兼容处理
       // 因为项目前期后端穿回来的数据格式与后期传回的数据格式不统一
@@ -190,6 +194,30 @@ export class ChartService {
         },
       });
     }
+  }
+
+  /**
+   * 获取漏斗图配置
+   */
+  getFunnel() {
+    const series = this.userChartData.series;
+
+    Object.assign(series[0], {
+      type: 'funnel',
+      width: '80%',
+      top: 20,
+      bottom: 20,
+      left: '10%',
+      sort: 'none'
+    });
+
+    return Object.assign(this.chartGridConfig, {
+      series: series,
+      tooltip: {
+        trigger: 'item',
+        formatter: this.tooltipFormatter.bind(this)
+      }
+    });
   }
 
   initConfig() {

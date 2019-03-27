@@ -132,7 +132,8 @@ export class MainComponent implements OnInit, OnDestroy {
         });
         this.items.push({ label: v.name, icon: 'fa-list-ul', items: items});
       }else {
-        this.items.push({ label: v.name, icon: 'fa-list-ul'});
+        this.items.push({ label: v.name, icon: 'fa-list-ul', routerLink: ['/reportPage', this.businessSelected.id, v.id],
+          command: this.changeActiveNav.bind(this) });
       }
     });
     // 管理员和超级管理员可见
@@ -206,10 +207,9 @@ export class MainComponent implements OnInit, OnDestroy {
         });
       } else {
         if (item.routerLink) {
-          if (curUrl.indexOf(item.routerLink[0]) > -1) {
+          if (item.routerLink.join('/') === curUrl) {
             item['active'] = true;
             item['expanded'] = true;
-            existDefaultPage = true;
           }
         }
       }

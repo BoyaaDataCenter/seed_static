@@ -5,12 +5,17 @@
       <input type="text" pInputText placeholder="输入关键字搜索" #gb/>
     </div>
     <div class="slds-col--bump-left">
-      <span class="dimSelect slds-m-right--small" *ngIf="dimList.length>0">
+      <span class="dimSelect slds-m-right--small" *ngIf="tableFilterList.length>0">
+        <span class="slds-m-right--small">过滤列</span>
+        <p-multiSelect [options]="tableFilterList" [(ngModel)]="filterSelected" (onChange)="selectFilterValue($event, true)" defaultLabel="请选择" [style]="{minWidth:'100px'}" [selectedItemsLabel]="'已选{0}列'"
+                       [maxSelectedLabels]="3" [limitNum]="limitNum"></p-multiSelect>
+      </span>
+      <span class="dimSelect slds-m-right--small" *ngIf="dimList.length>0 && !isTableComp">
         <span class="slds-m-right--small">维度选择</span>
         <p-multiSelect [options]="dimList" [(ngModel)]="dimSelected" (onChange)="selectDimValue($event, true)" defaultLabel="请选择" [style]="{minWidth:'100px'}" [selectedItemsLabel]="'已选{0}个维度'"
                        [maxSelectedLabels]="3" [limitNum]="limitNum"></p-multiSelect>
       </span>
-      <span class="dimSelect slds-m-right--small" *ngIf="dimList.length>0">
+      <span class="dimSelect slds-m-right--small" *ngIf="dimList.length>0 && !isTableComp">
         <span class="slds-m-right--small">按维度展开</span>
         <p-multiSelect [options]="tableDim" [(ngModel)]="tableDimValue" (onChange)="changeDataByDim($event, true)" defaultLabel="请选择" [style]="{minWidth:'100px'}" [selectedItemsLabel]="'已选{0}个维度'"
                        [maxSelectedLabels]="3"></p-multiSelect>
@@ -38,21 +43,21 @@
     [pageLinks]="5"
     [globalFilter]="gb"
     [rowsPerPageOptions]="[5,10,20,50,99]">
-    <p-column
+    <!--<p-column
       *ngIf="hasOperate || hasLink || hasEdit || hasDelete || hasDetail"
       header="操作"
       [frozen]="otherFrozen"
       [style]="{'width':'50px'}">
       <ng-template let-col let-rowd="rowData" pTemplate="body">
-        <div class="slds-grid slds-grid--align-center slds-grid--vertical-align-center" style="height: 25px;">
-          <i *ngIf="hasLink" class="fa fa-external-link bud-icon-button slds-m-right--small" (click)="linkToDetail(rowd)" title="查看详情"></i>
-          <i *ngIf="hasDetail" class="fa fa-external-link bud-icon-button slds-m-right--small" (click)="rowDetail(rowd)" title="查看详情"></i>
+        <div class="slds-grid slds-grid&#45;&#45;align-center slds-grid&#45;&#45;vertical-align-center" style="height: 25px;">
+          <i *ngIf="hasLink" class="fa fa-external-link bud-icon-button slds-m-right&#45;&#45;small" (click)="linkToDetail(rowd)" title="查看详情"></i>
+          <i *ngIf="hasDetail" class="fa fa-external-link bud-icon-button slds-m-right&#45;&#45;small" (click)="rowDetail(rowd)" title="查看详情"></i>
           <i *ngIf="hasOperate" class="fa fa-bar-chart bud-icon-button" (click)="showTrend(rowd)" title="查看趋势"></i>
           <i *ngIf="hasEdit" class="fa fa-pencil-square-o bud-icon-button" (click)="rowEdit(rowd)" title="编辑"></i>
-          <i *ngIf="hasDelete && rowd._hasDelete" class="fa fa-trash-o bud-icon-button slds-m-left--small" (click)="rowDelete(rowd)" title="删除"></i>
+          <i *ngIf="hasDelete && rowd._hasDelete" class="fa fa-trash-o bud-icon-button slds-m-left&#45;&#45;small" (click)="rowDelete(rowd)" title="删除"></i>
         </div>
       </ng-template>
-    </p-column>
+    </p-column>-->
     <p-column *ngFor="let col of _columns"
               [field]="col.field"
               [header]="col.header"

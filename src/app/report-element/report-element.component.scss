@@ -235,3 +235,12 @@
     width: 70%;
   }
 }
+
+/deep/ {
+  .ui-datatable table{
+      min-height: 100px;
+  }
+  .ui-datatable-emptymessage{
+    text-align: center;
+  }
+}

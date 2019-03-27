@@ -22,7 +22,7 @@
     <div class="slds-col--bump-left">
       <i class="fa slds-m-right--x-small bud-icon-button _bud-size-large"
          [ngClass]="{'fa-pie-chart': reportInfo.charttype=='pie', 'fa-bar-chart': reportInfo.charttype=='bar_cross',
-         'fa-line-chart':reportInfo.charttype=='line' || reportInfo.charttype=='linestack'  || reportInfo.charttype=='chart'}"
+         'fa-line-chart':reportInfo.charttype=='line' || reportInfo.charttype=='linestack'  || reportInfo.charttype=='chart' || reportInfo.charttype=='funnel'}"
          style="margin-left:10px;"
          [class.-active]="showChart"
          title="切换为图"  (click)="toggle(reportInfo.charttype);" *ngIf="chartChangeList.length==0"></i>
@@ -70,7 +70,6 @@
       [oneScreenShow]="tableOneScreenShow"
       [paginator]="tablePaginator"
       [rows]="tableRows"
-      [dimsList]="tableDimsList"
       [limitNum]="limitNum"
       [exportFilename]="reportInfo.name"
       [trendConfig]="trendConfig"
@@ -78,8 +77,11 @@
       [data]="tableData"
       [dimList]="dimensionsList"
       [dimSelected]="dimSelected"
+      [filterList]="dimList"
+      [isTableComp]="reportInfo.charttype.split('_')[0]=='table'"
       (selectChange)="echartSelectChange($event)"
-      (tableDimChange)="tableDimChange($event)">
+      (tableDimChange)="tableDimChange($event)"
+      (filterChange)="filterChange($event)">
     </app-data-table>
     <div *ngIf="showConfigTip" class="configTips">
       <img src="../../assets/images/arrow.png">
@@ -153,7 +155,7 @@
               <p-dropdown [options]="sortList" [(ngModel)]="item.sort" [autoWidth]="false" [style]="{width:'80%'}" [placeholder]="'请选择'" [scrollHeight]="'100px'"></p-dropdown>
             </div>
             <div style="width: 15%">
-              <p-dropdown [options]="defaultSelectedList" [(ngModel)]="item.default" [autoWidth]="false" [style]="{width:'80%'}" [placeholder]="'请选择'" [scrollHeight]="'100px'" *ngIf="item.type == 'dimensions'"></p-dropdown>
+              <p-dropdown [options]="defaultSelectedList" [(ngModel)]="item.default" [autoWidth]="false" [style]="{width:'80%'}" [disabled]="reportInfo.charttype.split('_')[0]=='table'" [placeholder]="'请选择'" [scrollHeight]="'100px'" *ngIf="item.type == 'dimensions'"></p-dropdown>
             </div>
           </div>
         </ng-container>

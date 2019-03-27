@@ -145,7 +145,6 @@ export class EchartsComponent implements AfterViewInit, OnDestroy, OnChanges {
   }
 
   selectIndexsValue(target) {
-    console.log('target', target);
     this.indexsSelected = target.value;
     this.selectChange.emit({'type': 'indexs', 'value': this.indexsSelected});
 

@@ -135,6 +135,8 @@ export class ReportElementComponent implements OnInit, OnDestroy {
   dimSelected = [];
   // 维度限制的个数
   limitNum = 0;
+  // 单表格组件储值
+  tableDataTemp = {};
   constructor(private chartService: ChartService, private reportElementService: ReportElementService,
               private globalDataService: GlobalDataService) {
     // 监听全局过滤条件加载完毕
@@ -169,6 +171,7 @@ export class ReportElementComponent implements OnInit, OnDestroy {
     this.reportType = chartType[1] || (chartType[0] == 'bar' ? 'cross' : 'row');
     // 默认显示图或表
     this.showChart = (chartType[0] !== 'table');
+    console.log('this.showChart', this.showChart, chartType);
     this.curChartType = chartType[0];
     // 图的基本配置
     this.chartTypeConfig = {
@@ -267,13 +270,21 @@ export class ReportElementComponent implements OnInit, OnDestroy {
           this.indexsList.push({'label': item.name, 'value': item.index});
         }
       });
-      let indexs;
-      // 报表除折线图外，指标个数默认一个
-      if (chartType == 'line') {
+      let indexs = [];
+      // 报表除折线图和单表格组件外，指标个数默认一个
+      if (chartType == 'line' || chartType == 'table') {
         indexs = [].concat(this.reportInfo.indexs);
       }else {
-        indexs = [Object.assign({}, this.reportInfo.indexs[0])];
-        this.indexsSelected = this.reportInfo.indexs[0].index;
+        if (this.indexsSelected) {
+          this.reportInfoTemp.indexs.forEach((item) => {
+            if (item.index == this.indexsSelected) {
+              indexs.push(item);
+            }
+          });
+        }else {
+          indexs = [Object.assign({}, this.reportInfo.indexs[0])];
+          this.indexsSelected = this.reportInfo.indexs[0].index;
+        }
       }
       this.currentIndexs = indexs;
 
@@ -317,6 +328,7 @@ export class ReportElementComponent implements OnInit, OnDestroy {
         'db_source': this.reportInfo.db_source
       };
       this.reportElementService.getSqlData(data).subscribe((succData) => {
+        console.log('this.showChart1111', this.showChart);
         if (this.showChart) {
           this.chartData = succData;
           this.setChartOption();
@@ -324,6 +336,7 @@ export class ReportElementComponent implements OnInit, OnDestroy {
           this.tableData = succData;
           this.setTableData();
         }
+        console.log('this.chartData', this.chartData, 'this.tableData', this.tableData);
         this.loadingHide();
       });
     }
@@ -347,6 +360,7 @@ export class ReportElementComponent implements OnInit, OnDestroy {
   setTableData() {
     const columns = [];
     const tableData = this.deepClone(this.tableData);
+    this.tableDataTemp = this.deepClone(this.tableData);
     if (tableData.displayName && tableData.displayName.length) {
       tableData.displayName.reduce((rs, item) => {
         let itemConfig;
@@ -466,7 +480,7 @@ export class ReportElementComponent implements OnInit, OnDestroy {
     this.dimList = [];
     this.reportElementService.getSqlFields({'sqls': this.reportInfoTemp.sql}).subscribe((listData) => {
       listData.fields.forEach((item) => {
-        this.dimList.push({'label': '', 'value': item, 'type': '', 'rate': false, 'show_type': '', 'yAxis' : '', 'default': ''});
+        this.dimList.push({'label': '', 'value': item, 'type': '', 'rate': false, 'show_type': '', 'yAxis' : '', 'default': true});
       });
     });
   }
@@ -521,7 +535,10 @@ export class ReportElementComponent implements OnInit, OnDestroy {
             // 折线图不需要指标选择器
             // this.indexsList.push(dataTemp_);
           }else {
-            if ( data['indexs'].length == 0) {
+            if (chartType == 'table') {
+              data['indexs'].push(dataTemp);
+              this.currentIndexs.push(dataTemp);
+            }else if ( data['indexs'].length == 0) {
               data['indexs'].push(dataTemp);
               this.currentIndexs.push(dataTemp);
             }
@@ -566,7 +583,7 @@ export class ReportElementComponent implements OnInit, OnDestroy {
         return;
       }
 
-      if (data['indexs'].length > reportConfig.indexsNum || data['indexs'].length == 0) {
+      if (data['indexs'].length > reportConfig.indexsNum || (data['indexs'].length == 0 && reportConfig.needIndexs)) {
         iziToast.error({
           position: 'topRight',
           title: '保存失败!',
@@ -602,13 +619,19 @@ export class ReportElementComponent implements OnInit, OnDestroy {
     this.reportElementService.getSqlData(data).subscribe((succData) => {
       this.showConfigTip = false;
       this.hasConfig = true;
-      if (!this.showChart) {
-        const chartType_ = this.reportInfo.charttype.split('_');
-        this.showChart = true;
-        this.curChartType = chartType_[0];
+      if ( chartType != 'table') {
+        if (!this.showChart) {
+          const chartType_ = this.reportInfo.charttype.split('_');
+          this.showChart = true;
+          this.curChartType = chartType_[0];
+        }
+        this.chartData = succData;
+        this.setChartOption();
+      }else {
+        this.tableData = succData;
+        this.setTableData();
       }
-      this.chartData = succData;
-      this.setChartOption();
+
       this.dialogHide();
       this.loadingHide();
       this.globalDataService.onCompChange({'isGlobal': false, 'type': 'chart', 'cid': this.cid, 'param': {'db_source': data['db_source'],
@@ -774,6 +797,33 @@ export class ReportElementComponent implements OnInit, OnDestroy {
         this.setTableData();
       }
       this.loadingHide();
+    });
+  }
+
+  filterChange(data) {
+    const columns = [];
+    const tableData = this.deepClone(this.tableDataTemp);
+    if (tableData.displayName && tableData.displayName.length) {
+      tableData.displayName.reduce((rs, item) => {
+        if (data.filterData.indexOf(item.name) > -1) {
+          let itemConfig;
+          itemConfig = { header: item.displayName, field: item.name, sortable: true };
+          if (this.tableFieldsWidthConfig && !this.isUndefined(this.tableFieldsWidthConfig[item.name])) {
+            itemConfig['width'] = this.tableFieldsWidthConfig[item.name];
+          }
+          rs.push(itemConfig);
+        }
+        return rs;
+      }, columns);
+      this.tableData = tableData.data;
+      this.tableColumns = columns;
+    } else {
+      this.tableData = tableData;
+      this.tableColumns = this.deepClone(this.tableColumns);
+    }
+    this.tableChange.next({
+      data: this.tableData,
+      columns: this.tableColumns
     });
   }
 
