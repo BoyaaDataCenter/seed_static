@@ -78,7 +78,7 @@ export class ReportElementComponent implements OnInit, OnDestroy {
   // 指标和维度列表
   dimList = [];
   // 指标和维度下拉选择
-  typeList = [{'label': '指标', 'value': 'indexs'}, {'label': '维度', 'value': 'dimensions'}];
+  typeList = [{'label': '指标', 'value': 'indexs'}, {'label': '维度', 'value': 'dimensions'}];  
   // 是否百分比显示下拉选择
   rateList = [{'label': '否', 'value': false}, {'label': '是', 'value': true}];
   // 显示类型下拉
@@ -137,6 +137,18 @@ export class ReportElementComponent implements OnInit, OnDestroy {
   limitNum = 0;
   // 单表格组件储值
   tableDataTemp = {};
+
+  // 是否显示表
+  noTable = true;
+  // 地图特殊特定需要的过滤条件
+  mapQueryParam = {
+    slng: -71.63105200000001,
+    slat: -39.370175999999994,
+    elng: 271.662506,
+    elat: 103.02018899999999,
+    region_id: 2,
+    fpid: false
+  };
   constructor(private chartService: ChartService, private reportElementService: ReportElementService,
               private globalDataService: GlobalDataService) {
     // 监听全局过滤条件加载完毕
@@ -171,16 +183,16 @@ export class ReportElementComponent implements OnInit, OnDestroy {
     this.reportType = chartType[1] || (chartType[0] == 'bar' ? 'cross' : 'row');
     // 默认显示图或表
     this.showChart = (chartType[0] !== 'table');
-    console.log('this.showChart', this.showChart, chartType);
+    // console.log('this.showChart', this.showChart, chartType);
     this.curChartType = chartType[0];
     // 图的基本配置
     this.chartTypeConfig = {
       base: chartType[0] == 'linestack' || chartType[0] == 'chart' ? 'line' : chartType[0],
       reverse: this.reportType !== 'row'
     };
-
+    // console.log(this.curChartType, this.reportConfig[this.curChartType]);
     this.limitNum = this.reportConfig[this.curChartType]['dimensionsLimit'] || 0;
-
+    this.noTable = this.reportConfig[this.curChartType]['noTable'];
     this.reportInfoTemp = this.deepClone(this.reportInfo);
 
     // 通过是否配置了sql来标识该报表已配置（不能通过id，因为新建的报表在没有保存整个页面的时候是没有id的，这里通过sql在简单判断）
@@ -238,6 +250,11 @@ export class ReportElementComponent implements OnInit, OnDestroy {
         this.queryParam[key] = this.panelQueryParam[key]['value'];
       }
     });
+    const chartType = this.reportInfo.charttype;
+    // 如果为map的组件，需要固定加上slat,elat,slng,elng 经纬度范围参数
+    if (chartType === 'map') {
+      this.queryParam = Object.assign({}, this.queryParam, this.mapQueryParam);
+    }
   }
 
   // 获取数据
@@ -328,15 +345,15 @@ export class ReportElementComponent implements OnInit, OnDestroy {
         'db_source': this.reportInfo.db_source
       };
       this.reportElementService.getSqlData(data).subscribe((succData) => {
-        console.log('this.showChart1111', this.showChart);
+        // console.log('this.showChart1111', this.showChart);
         if (this.showChart) {
           this.chartData = succData;
-          this.setChartOption();
-        }else {
+          this.curChartType !== 'map' && this.setChartOption();
+        } else {
           this.tableData = succData;
           this.setTableData();
         }
-        console.log('this.chartData', this.chartData, 'this.tableData', this.tableData);
+        // console.log('this.chartData', this.chartData, 'this.tableData', this.tableData);
         this.loadingHide();
       });
     }
@@ -477,14 +494,77 @@ export class ReportElementComponent implements OnInit, OnDestroy {
       });
       return;
     }
-    this.dimList = [];
-    this.reportElementService.getSqlFields({'sqls': this.reportInfoTemp.sql}).subscribe((listData) => {
+    // this.dimList = [];
+    const newDimList = [];
+    this.reportElementService.getSqlFields({'sqls': this.reportInfoTemp.sql, 'chartType': this.curChartType}).subscribe((listData) => {
       listData.fields.forEach((item) => {
-        this.dimList.push({'label': '', 'value': item, 'type': '', 'rate': false, 'show_type': '', 'yAxis' : '', 'default': true});
+        const temp = this.initDimsIndexs(this.reportInfo.charttype, item);
+        newDimList.push(temp);
       });
+
+      this.dimList = newDimList.map((e) => {
+        for(let i=0;i<this.dimList.length;i++) {
+          let item = this.dimList[i];
+          if (e.value === item.value) {
+            e = Object.assign({}, e, item);
+            break;
+          }
+        }
+        return e;
+      });
+
     });
   }
-
+  // 初始化指标和维度
+  initDimsIndexs(type, item) {
+    const temp = {'label': '', 'value': item, 'type': '', 'rate': false, 'show_type': '', 'yAxis' : '', 'default': true};
+    if (type === 'sankey') {
+      if (~['source', 'target'].indexOf(item)) {
+        temp.type = 'dimensions';
+        switch(item){
+          case 'source':
+          temp.label = '左端点';
+          break;
+          case 'target':
+          temp.label = '右端点';
+          break;
+        }
+      } else {
+        temp.type = 'indexs';
+      }
+    }
+    if (type === 'map') {
+      if (~['region_name', 'fpid', 'lat', 'lng'].indexOf(item)) {
+        temp.type = 'dimensions';
+        switch(item){
+          case 'region_name':
+          temp.label = '区域';
+          break;
+          case 'fpid':
+          temp.label = '区域上级id';
+          break;
+          case 'lat':
+          temp.label = '纬度';
+          break;
+          case 'lng':
+          temp.label = '经度';
+          break;
+        }
+      } else {
+        temp.type = 'indexs';
+      }
+    }
+    return temp;
+  }
+  getDisabledStatus(type, item) {
+    if (type === 'sankey') {
+      return ~['source', 'target'].indexOf(item);
+    }
+    if (type === 'map') {
+      return ~['region_name', 'fpid', 'lat', 'lng'].indexOf(item);
+    }
+    return false;
+  }
   // 点击级联选项
   clickQueryItem(key, type) {
     const index = this.JQuery('.reportDialogBody .sqlConfig')[0].selectionStart;
@@ -626,7 +706,7 @@ export class ReportElementComponent implements OnInit, OnDestroy {
           this.curChartType = chartType_[0];
         }
         this.chartData = succData;
-        this.setChartOption();
+        this.curChartType !== 'map' && this.setChartOption();
       }else {
         this.tableData = succData;
         this.setTableData();
@@ -767,7 +847,7 @@ export class ReportElementComponent implements OnInit, OnDestroy {
     this.reportElementService.getSqlData(dataObject).subscribe((succData) => {
       if (this.showChart) {
         this.chartData = succData;
-        this.setChartOption();
+        this.curChartType !== 'map' && this.setChartOption();
       }else {
         this.tableData = succData;
         this.setTableData();
@@ -775,7 +855,50 @@ export class ReportElementComponent implements OnInit, OnDestroy {
       this.loadingHide();
     });
   }
-
+  // 报表的指标或者维度组合变化
+  mapSelectChange(data) {
+    let indexs = [], dimensions = [];
+    if (data.type == 'indexs') {
+      // 指标变化，则维度使用上一次的值
+      dimensions = this.currentDimensions;
+      // 存储当前指标的值
+      this.indexsSelected = data.value;
+      this.reportInfoTemp.indexs.forEach((item) => {
+        if (item.index == data.value) {
+          indexs.push(item);
+          this.currentIndexs = indexs;
+        }
+      });
+    }else {
+      indexs = this.currentIndexs;
+      this.dimSelected = data.value;
+      this.reportInfoTemp.dimensions.forEach((item) => {
+        if (data.value.indexOf(item.dimension) > -1) {
+          dimensions.push(item);
+        }
+      });
+      this.currentDimensions = dimensions;
+    }
+    this.loadingShow();
+    this.queryParam = Object.assign({}, this.queryParam, this.mapQueryParam);
+    let dataObject = {
+      'charttype': this.curChartType,
+      'sql': this.reportInfo.sql,
+      'indexs': indexs,
+      'dimensions': dimensions,
+      'query': this.queryParam,
+      'db_source': this.reportInfo.db_source
+    };
+    this.reportElementService.getSqlData(dataObject).subscribe((succData) => {
+      if (this.showChart) {
+        this.chartData = succData;
+      }else {
+        this.tableData = succData;
+        this.setTableData();
+      }
+      this.loadingHide();
+    }); 
+  }
   // 表格的维度变化
   tableDimChange(data) {
     this.loadingShow();
@@ -791,7 +914,7 @@ export class ReportElementComponent implements OnInit, OnDestroy {
     this.reportElementService.getSqlData(dataObject).subscribe((succData) => {
       if (this.showChart) {
         this.chartData = succData;
-        this.setChartOption();
+        this.curChartType !== 'map' && this.setChartOption();
       }else {
         this.tableData = succData;
         this.setTableData();

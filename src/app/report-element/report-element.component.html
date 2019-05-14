@@ -22,7 +22,8 @@
     <div class="slds-col--bump-left">
       <i class="fa slds-m-right--x-small bud-icon-button _bud-size-large"
          [ngClass]="{'fa-pie-chart': reportInfo.charttype=='pie', 'fa-bar-chart': reportInfo.charttype=='bar_cross',
-         'fa-line-chart':reportInfo.charttype=='line' || reportInfo.charttype=='linestack'  || reportInfo.charttype=='chart' || reportInfo.charttype=='funnel'}"
+         'fa-line-chart':reportInfo.charttype=='line' || reportInfo.charttype=='linestack'  || reportInfo.charttype=='chart' || reportInfo.charttype=='funnel'
+         || reportInfo.charttype=='sankey', 'fa-globe':reportInfo.charttype =='map'}"
          style="margin-left:10px;"
          [class.-active]="showChart"
          title="切换为图"  (click)="toggle(reportInfo.charttype);" *ngIf="chartChangeList.length==0"></i>
@@ -43,7 +44,7 @@
       </i>
       <i class="fa fa-table bud-icon-button _bud-size-large"
          [class.-active]="!showChart"
-         (click)="toggle('table')" title="切换为表"></i>
+         (click)="toggle('table')" title="切换为表" *ngIf="!noTable"></i>
       <span class="set-btn fa fa-cog" title="配置" (click)="setDefault($event)" *ngIf="isCanSet"></span>
       <span class="delete-btn fa fa-trash" title="删除" (click)="deleteComponent($event)" *ngIf="isCanSet"></span>
     </div>
@@ -52,7 +53,7 @@
   <!-- 报表内容 -->
   <div class="body">
     <app-loading [loading]="loading" [msg]="errMsg"></app-loading>
-    <div *ngIf="showChart && noChange">
+    <div *ngIf="showChart && noChange && reportInfo.charttype !='map'">
       <app-echarts
         [option]="chartOption"
         [height]="rh / 100 * bodySize.height + 'px'"
@@ -63,6 +64,16 @@
         [indexsSelected]="indexsSelected"
         (selectChange)="echartSelectChange($event)"
       ></app-echarts>
+    </div>
+    <div  *ngIf="showChart && noChange && reportInfo.charttype =='map'">
+        <app-map
+        [indexsList]="indexsList"
+        [indexsSelected]="indexsSelected"
+        [mapQueryParam]="mapQueryParam"
+        [height]="rh + 'px'"
+        [data]="chartData"
+        (selectChange)="mapSelectChange($event)"
+        ></app-map>
     </div>
     <app-data-table
       *ngIf="!showChart"
@@ -83,9 +94,9 @@
       (tableDimChange)="tableDimChange($event)"
       (filterChange)="filterChange($event)">
     </app-data-table>
-    <div *ngIf="showConfigTip" class="configTips">
+    <!-- <div *ngIf="showConfigTip" class="configTips">
       <img src="../../assets/images/arrow.png">
-    </div>
+    </div>-->
   </div>
   <span class="resizableHandle" (mousedown)="resizable($event)" *ngIf="isCanSet"></span>
   <!-- 报表内容 -->
@@ -125,15 +136,15 @@
           <span *ngFor="let item of queryList" class="queryItem" (click)="clickQueryItem(item[0], item[2])" title="点击插入SQL">{{item[1]}}</span>
         </div>
         <div style="text-align: right;">
-          <div class="getSqlDim" (click)="getSqlDim()">生成指标和纬度</div>
+          <div class="getSqlDim" (click)="getSqlDim()">生成指标和维度</div>
         </div>
       </div>
       <div class="item">
-        <div>指标和纬度</div>
+        <div>指标和维度</div>
         <div *ngIf="tips.length>0">
           <p class="tipText">{{tips}}</p>
         </div>
-        <ng-container *ngIf="curChartType!='line'">
+        <ng-container *ngIf="curChartType!='line' && reportInfo.charttype != 'sankey' && reportInfo.charttype != 'map'">
           <div class="dimList">
             <div style="width: 20%">字段名</div>
             <div style="width: 20%">中文名</div>
@@ -189,7 +200,34 @@
             </div>
           </div>
         </ng-container>
-
+        <ng-container *ngIf="reportInfo.charttype =='sankey'">
+          <div class="dimList">
+            <div style="width: 40%">字段名</div>
+            <div style="width: 40%">中文名</div>
+            <div style="width: 20%">指标或维度</div>
+          </div>
+          <div *ngFor="let item of dimList; let i of index" class="dimList">
+            <div style="width: 40%">{{item.value}}</div>
+            <div style="width: 40%"><input [disabled]="getDisabledStatus('sankey', item.value)"  [(ngModel)]="item.label" style="width: 80%;"></div>
+            <div style="width: 20%">
+              <p-dropdown [disabled]="getDisabledStatus('sankey', item.value)" [options]="typeList" [(ngModel)]="item.type" [autoWidth]="false" [style]="{width:'80%'}" [placeholder]="'请选择'" [scrollHeight]="'100px'"></p-dropdown>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="reportInfo.charttype =='map'">
+            <div class="dimList">
+              <div style="width: 40%">字段名</div>
+              <div style="width: 40%">中文名</div>
+              <div style="width: 20%">指标或维度</div>
+            </div>
+            <div *ngFor="let item of dimList; let i of index" class="dimList">
+              <div style="width: 40%">{{item.value}}</div>
+              <div style="width: 40%"><input [disabled]="getDisabledStatus('map', item.value) &&  item.value !== 'region_name'"  [(ngModel)]="item.label" style="width: 80%;"></div>
+              <div style="width: 20%">
+                <p-dropdown [disabled]="getDisabledStatus('map', item.value)" [options]="typeList" [(ngModel)]="item.type" [autoWidth]="false" [style]="{width:'80%'}" [placeholder]="'请选择'" [scrollHeight]="'100px'"></p-dropdown>
+              </div>
+            </div>
+          </ng-container>
         <div class="dimList" *ngIf="!dimList.length">
           <div class="noList">请先配置SQL生成指标和维度</div>
         </div>

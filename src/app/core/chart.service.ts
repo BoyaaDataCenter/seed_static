@@ -35,17 +35,18 @@ export class ChartService {
   ) {}
 
   getChartOptionByType(chartConfig, data) {
-    console.log('chartConfig', chartConfig, 'data', data);
+    // console.log('chartConfig', chartConfig, 'data', data);
     this.userChartConfig = JSON.parse(JSON.stringify(chartConfig));
     this.userChartData = JSON.parse(JSON.stringify(data));
     this.initConfig();
     let chartOption = {};
 
-    if (this.userChartConfig.base === 'pie') {
+    if (this.userChartConfig.base === 'sankey') {
+      chartOption = this.getSankeyConfig();
+    } else if (this.userChartConfig.base === 'pie') {
       chartOption = this.getPieConfig();
     } else if (this.userChartConfig.base === 'funnel') {
       chartOption = this.getFunnel();
-
     }else {
       // 数据格式兼容处理
       // 因为项目前期后端穿回来的数据格式与后期传回的数据格式不统一
@@ -119,6 +120,35 @@ export class ChartService {
       }
       return rs;
     }, {});
+  }
+
+  /**
+   * 获取桑基图配置
+   */
+  getSankeyConfig() {
+    if (this.userChartData.nodes.length && this.userChartData.links.length) {
+      return Object.assign(this.chartGridConfig, {
+        tooltip: {
+          trigger: 'item',
+          triggerOn: 'mousemove',
+          formatter: params => params.name + ': ' + this.numberFormatPipe.transform(params.value, 1)
+        },
+        series: [
+          {
+            type: 'sankey',
+            layout: 'none',
+            right: '130px',
+            left: '30px',
+            data: this.userChartData.nodes,
+            links: this.userChartData.links,
+            itemStyle: { normal: { borderWidth: 1, borderColor: '#aaa' }},
+            lineStyle: { normal: { curveness: 0.5 }}
+          }
+        ]
+      });
+    } else {
+      return {};
+    }
   }
 
   /**
@@ -326,7 +356,6 @@ export class ChartService {
       return seriesItem;
     });
   }
-
 
   tooltipFormatter(params) {
     let name;

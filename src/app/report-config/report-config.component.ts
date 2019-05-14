@@ -136,9 +136,18 @@ export class ReportConfigComponent implements OnInit, AfterViewInit, OnDestroy {
       scroll: true,
       onAdd: function (evt) {
         const type = jQuery(evt.item).attr('_type');
-        const data = {'bussiness_id': that_.bid, 'charttype': type, 'dimensions': [], 'filters': [], 'h': 30, 'indexs': [],
-          'page_id': that_.pid, 'sql': '', 'w': 48.2, 'x': 0, 'y': 0, 'name': '', 'desc': '', 'db_source': 0,
+        let h = 30;
+        let w = 48.2;
+        if (type === 'map') {
+          // 地图的，默认650px，而不是百分比
+          h = 650;
+          // 宽度默认为100%
+          w = 100;
+        }
+        const data = {'bussiness_id': that_.bid, 'charttype': type, 'dimensions': [], 'filters': [], 'h': h, 'indexs': [],
+          'page_id': that_.pid, 'sql': '', 'w': w, 'x': 0, 'y': 0, 'name': '', 'desc': '', 'db_source': 0,
           'sort': that_.panelCompList.length, 'cascades': {}};
+
         that_.panelCompList.push(data);
         jQuery(evt.item).remove();
       },

@@ -92,7 +92,7 @@ export class EchartsComponent implements AfterViewInit, OnDestroy, OnChanges {
       }
 
       // 判断是否有多条Y轴，存在多条Y轴，右边距需要设置为55px
-      this.option.series.forEach((v) => {
+      this.option.series && this.option.series.forEach((v) => {
         if (v.yAxisIndex > 0) {
           this.option.grid.right = '55px';
         }

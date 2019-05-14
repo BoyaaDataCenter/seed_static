@@ -9,6 +9,7 @@ import {PanelMenuModule, MenuModule, PanelModule, DataTableModule, ToolbarModule
   FieldsetModule, ToggleButtonModule} from '../primeng/primeng';
 // import { KeyDataComponent } from './key-data/key-data.component';
 import { EchartsComponent } from './echarts/echarts.component';
+import { MapComponent } from './map/map.component';
 import { DataTableComponent } from './data-table/data-table.component';
 import { NumberFormatPipe } from './number-format.pipe';
 import { MultiSelectComponent } from './multi-select/multi-select.component';
@@ -40,7 +41,7 @@ import { DropdownComponent } from './dropdown/dropdown.component';
     ToggleButtonModule
   ],
   declarations: [
-    EchartsComponent, DataTableComponent,
+    EchartsComponent, MapComponent, DataTableComponent,
     NumberFormatPipe, MultiSelectComponent, FlatpickrComponent,
     SingleSelectComponent, HelpInfoComponent, LoadingComponent,
     FilterPipe,
@@ -50,7 +51,7 @@ import { DropdownComponent } from './dropdown/dropdown.component';
     DataTableModule, priSharedModule, ToolbarModule,
     ButtonModule, InputTextModule, OverlayPanelModule,
     TooltipModule, DropdownModule, MultiSelectModule,
-    EchartsComponent, DataTableComponent, RadioButtonModule,
+    EchartsComponent, MapComponent, DataTableComponent, RadioButtonModule,
     NumberFormatPipe, MultiSelectComponent, FlatpickrComponent,
     SelectButtonModule, SingleSelectComponent, HelpInfoComponent,
     CheckboxModule, LoadingComponent, FilterPipe, InputTextareaModule, ToggleButtonModule,
