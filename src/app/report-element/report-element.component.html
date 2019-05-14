@@ -55,8 +55,9 @@
     <app-loading [loading]="loading" [msg]="errMsg"></app-loading>
     <div *ngIf="showChart && noChange && reportInfo.charttype !='map'">
       <app-echarts
+        [chartType]="reportInfo.charttype"
         [option]="chartOption"
-        [height]="rh / 100 * bodySize.height + 'px'"
+        [height]="rh / 100 * bodySize.height + 'px' "
         [dimList]="dimensionsList"
         [indexsList]="indexsList"
         [limitNum]="limitNum"

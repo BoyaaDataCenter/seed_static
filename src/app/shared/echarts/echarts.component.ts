@@ -16,6 +16,7 @@ export class EchartsComponent implements AfterViewInit, OnDestroy, OnChanges {
   static DEFAULT_ROWS = 15;
   // 生成图表区域元素
   @ViewChild('chart') chartWrap: ElementRef;
+  @Input() chartType = 'line';
   @Input() option;
   // 图表区域高度
   @Input() height;
