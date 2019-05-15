@@ -30,6 +30,16 @@ const config_ = {
           "type": "funnel"
         },
         {
+          "name": "桑基图",
+          "icon": "./../../assets/images/sankey.jpg",
+          "type": "sankey"
+        },
+        {
+          "name": "地图",
+          "icon": "./../../assets/images/map.jpg",
+          "type": "map"
+        },
+        {
           "name": "表格",
           "icon": "./../../assets/images/bgt.jpg",
           "type": "table"
