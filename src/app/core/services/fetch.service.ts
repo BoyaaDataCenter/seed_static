@@ -350,7 +350,8 @@ export class FetchService {
    */
   codeHandler(res) {
     if (typeof res.code !== 'undefined') {
-      if (res.code === 401) {
+      // 单点登录模式, 未登录返回-14
+      if (res.code === -14) {
         window.location.href = res.data;
       } else if (res.code !== 200 && res.code !== 401) {
         console.log('请求返回码错误，返回数据：', res);
@@ -362,7 +363,7 @@ export class FetchService {
 
   /**
    * http 请求发生错误处理
-   */
+   */ 
   errorHandler(err) {
     NProgress.done();
     console.error('http请求出错：', err);
